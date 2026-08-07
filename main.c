@@ -80,3 +80,20 @@ static int  parse_color(const char *str, t_color *out)
 }
 
 // ambient parser
+static void parse_ambient(char *line, t_scene *scene)
+{
+    char    *token;
+
+    token = strtok(line, "");
+    token = strtok(NULL, "");
+    if (!token || !parse_double(token, &scene->ambient.ratio))
+        return ;
+
+    token = strtok(NULL, "");
+    if (!token || !parse_colour(token, &scene->ambient.color))
+        return ;
+    
+    scene->has_ambient = 1;
+}
+
+// camera parser
