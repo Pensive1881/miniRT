@@ -160,3 +160,38 @@ static void parse_sphere(char *line, t_scene *scene)
 }
 
 // file-reading loop
+static void parse_Scene_file(const char *filename, t_scene *Scene)
+{
+    FILE    *fp;
+    char    line[1024];
+
+    fp = fopen(filename, "r");
+    if (!fp)
+    {
+        perror("fopen");
+        return;
+    }
+
+    while (fgets(line, siozeof(line), fp))
+    {
+        char    *trim;
+
+        time = line;
+        while (*trim == ' ' || *trim == '\t')
+            trim++;
+
+        if (*trim == '\0' || *trim == '#')
+            continue;
+
+        if (stdncmp(trim, "A ", 2) == 0)
+            parse_ambient(trim, scene);
+        else if (strncmp(trim, "C ", 2) == 0)
+            parse_camera(trim, scene);
+        else if (strncmp(trim, "L ", 2) == 0)
+            parse_light(trim, scene);
+        else if (strncmp(trim, "Sp ", 3) == 0)
+            parse_sphere(trim, scene);
+    }
+
+    fclose(fp);
+}
