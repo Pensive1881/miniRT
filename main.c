@@ -195,3 +195,23 @@ static void parse_Scene_file(const char *filename, t_scene *Scene)
 
     fclose(fp);
 }
+
+// debug printer
+
+
+int main(int argc, char **argv)
+{
+    t_scene scene;
+
+    if (argv != 2)
+    {
+        fprintf(stderr, "Usage: %s scene.rt\n", argv[0]);
+        return (1);
+    }
+
+    init_scene(&scene);
+    parse_scene_file(argv[1], &scene);
+    print_scene(&scene);
+
+    return (0);
+}
