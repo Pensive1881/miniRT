@@ -6,7 +6,7 @@ static void init_scene(t_scene *scene)
     memset(scene, 0, sizeof(*scene));
 }
 
-// number parser
+// number parser: ratio, diameter & FOV values
 static int  parse_double(const char *str, double *out)
 {
     char    *end;
@@ -79,7 +79,7 @@ static int  parse_color(const char *str, t_color *out)
     return (1);
 }
 
-// ambient parser
+// ambient parser: ratio & colour
 static void parse_ambient(char *line, t_scene *scene)
 {
     char    *token;
@@ -96,4 +96,25 @@ static void parse_ambient(char *line, t_scene *scene)
     scene->has_ambient = 1;
 }
 
-// camera parser
+// camera parser: position, diretion & FOV
+static void parse_camera(char *line, t_scene *scene)
+{
+    char    *token;
+
+    token = strtok();
+    token = strtok();
+    if (!token || !parse_vec3(token, &scene->camera.position))
+        return;
+
+    token = strtok();
+    if (!token || !parse_vec3(token, &scene->camera.direction))
+        return;
+
+    token = strtok();
+    if (!token || !parse_double(token, &scene->camera.fov))
+        return;
+
+    scene->hascamera = 1;
+}
+
+// light parser: position, ratio & colour
