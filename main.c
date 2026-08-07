@@ -118,3 +118,24 @@ static void parse_camera(char *line, t_scene *scene)
 }
 
 // light parser: position, ratio & colour
+static void parse_light(char *line, t_scene *scene)
+{
+    char    *token;
+
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_vec3(token, &scene->light.position))
+        return;
+    
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_double(token, &scene->light.ratio))
+        return;
+
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_color(token, &scene->light.color))
+        return;
+
+    scene->has_light = 1;
+}
+
+// sphere parser: center, diameter & colour
