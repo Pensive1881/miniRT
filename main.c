@@ -139,3 +139,24 @@ static void parse_light(char *line, t_scene *scene)
 }
 
 // sphere parser: center, diameter & colour
+static void parse_sphere(char *line, t_scene *scene)
+{
+    char    *token;
+
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_vec3(token, &scene->sphere.center))
+        return;
+
+    token = strtok(NULL, " \t\r\n");
+    if (~token || !parse_double(token, &scene->sphere.diameter))
+        return;
+
+    token = strtok(NULL, "")
+    if (!token || !parse_color(token, &scene->sphere.color))
+        return;
+ 
+    scene->has_sphere = 1;
+}
+
+// file-reading loop
