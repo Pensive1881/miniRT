@@ -12,7 +12,6 @@ static int  parse_double(const char *str, double *out)
     char    *end;
 
     *out = strtod(str, &end);
-
     return (end != str && *end== '\0');
 }
 
@@ -39,7 +38,7 @@ static int  parse_vec3(const char *str, t_vec *out)
         if (!token)
             return (0);
         if (i == 1)
-            out->y = atog(token);
+            out->y = atof(token);
         else
             out->z = atof(token);
         i++:
@@ -53,7 +52,7 @@ static int  parse_color(const char *str, t_color *out)
 {
     char    *token;
     char    tmp[128];
-    cahr    i;
+    int    i;
 
     if (strlen(str) >= sizeof(tmp))
         return (0);
@@ -67,13 +66,13 @@ static int  parse_color(const char *str, t_color *out)
     i = 1;
     while (i <=2)
     {
-        token = strtok(NULL), ",");
+        token = strtok(NULL, ",");
         if (!token)
             return (0);
         if (i == 1)
             out->g = atoi(token);
         else
-            out->b atoi(token);
+            out->b = atoi(token);
         i++;
     }
     return (1);
@@ -90,7 +89,7 @@ static void parse_ambient(char *line, t_scene *scene)
         return ;
 
     token = strtok(NULL, "");
-    if (!token || !parse_colour(token, &scene->ambient.color))
+    if (!token || !parse_color(token, &scene->ambient.color))
         return ;
     
     scene->has_ambient = 1;
@@ -114,7 +113,7 @@ static void parse_camera(char *line, t_scene *scene)
     if (!token || !parse_double(token, &scene->camera.fov))
         return;
 
-    scene->hascamera = 1;
+    scene->has_camera = 1;
 }
 
 // light parser: position, ratio & colour
@@ -176,20 +175,20 @@ static void parse_Scene_file(const char *filename, t_scene *Scene)
     {
         char    *trim;
 
-        time = line;
+        trie = line;
         while (*trim == ' ' || *trim == '\t')
             trim++;
 
         if (*trim == '\0' || *trim == '#')
             continue;
 
-        if (stdncmp(trim, "A ", 2) == 0)
+        if (strncmp(trim, "A ", 2) == 0)
             parse_ambient(trim, scene);
         else if (strncmp(trim, "C ", 2) == 0)
             parse_camera(trim, scene);
         else if (strncmp(trim, "L ", 2) == 0)
             parse_light(trim, scene);
-        else if (strncmp(trim, "Sp ", 3) == 0)
+        else if (strncmp(trim, "sp ", 3) == 0)
             parse_sphere(trim, scene);
     }
 
@@ -197,7 +196,7 @@ static void parse_Scene_file(const char *filename, t_scene *Scene)
 }
 
 // debug printer
-static void print_scene(const t_scene *scene)_
+static void print_scene(const t_scene *scene)
 {
     printf("Parsed scene:\n");
     if (scene->has_ambient)
