@@ -124,7 +124,7 @@ static void parse_camera(char *line, t_scene *scene)
         return;
 
     token = strtok(NULL, " \t\r\n");
-    if (!token || !parse_double(token, &scene->camera.fov))
+    if (!token || !parse_int(token, &scene->camera.fov))
         return;
 
     scene->has_camera = 1;
@@ -165,7 +165,7 @@ static void parse_sphere(char *line, t_scene *scene)
     if (!token || !parse_double(token, &scene->sphere.diameter))
         return;
 
-    token = strtok(NULL, " \t\r\n")
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &scene->sphere.color))
         return;
  
@@ -173,7 +173,7 @@ static void parse_sphere(char *line, t_scene *scene)
 }
 
 // file-reading loop
-static void parse_Scene_file(const char *filename, t_scene *Scene)
+static void parse_Scene_file(const char *filename, t_scene *scene)
 {
     FILE    *fp;
     char    line[1024];
@@ -189,7 +189,7 @@ static void parse_Scene_file(const char *filename, t_scene *Scene)
     {
         char    *trim;
 
-        tri m = line;
+        trim = line;
         while (*trim == ' ' || *trim == '\t')
             trim++;
 
@@ -221,13 +221,13 @@ static void print_scene(const t_scene *scene)
             scene->ambient.color.b);
 
     if (scene->has_camera)
-        printf("Camera: pos=(%.2f,%.2f,%.2f) dir=(%.2f%.2f%.2f) fov=%d\n",
+        printf("Camera: pos=(%.2f,%.2f,%.2f) dir=(%.2f,%.2f,%.2f) fov=%d\n",
             scene->camera.position.x, scene->camera.position.y, scene->camera.position.z,
             scene->camera.direction.x, scene->camera.direction.y, scene->camera.direction.z
-            scene->camera.camera.fov);
+            scene->camera.fov);
 
     if (scene->has_light)
-        printf("Light: pos=(%.2f,%.2f,%.2f) ratio%.2f color=(%d,%d,%d)\n",
+        printf("Light: pos=(%.2f,%.2f,%.2f) ratio=%.2f color=(%d,%d,%d)\n",
             scene->light.position.x, scene->light.position.y, scene->light.position.z,
             scene->light.ratio,
             scene->light.color.r,
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
 {
     t_scene scene;
 
-    if (argv != 2)
+    if (argc != 2)
     {
         fprintf(stderr, "Usage: %s scene.rt\n", argv[0]);
         return (1);
