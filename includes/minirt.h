@@ -61,4 +61,16 @@ typedef struct s_scene
     int         has_sphere;
 }   t_scene;
 
+//vec3 functions
+t_vec3  vec3(double x, double y, double z);
+t_vec3  vec3_add(t_vec3 a, t_vec3 b);
+t_vec3  vec3_sub(t_vec3 a, t_vec3 b);
+t_vec3  vec3_scale(t_vec3 v, double t);
+double  vec3_dot(t_vec3 a, t_vec3 b);
+t_vec3  vec3_cross(t_vec3 a, t_vec3 b);
+double  vec3_len_sq(t_vec3 v);
+double  vec3_len(t_vec3 v);
+t_vec3  vec3_norm(t_vec3 v);
+t_vec3  vec3_mul(t_vec3 a, t_vec3 b);
+
 #endif
