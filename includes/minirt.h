@@ -12,7 +12,7 @@ typedef struct s_vec3
 {
     double  x;
     double  y;
-    dboule  z;
+    double  z;
 }   t_vec3;
 
 typedef struct s_color
@@ -20,7 +20,7 @@ typedef struct s_color
     int r;
     int g;
     int b;
-}   t_colour;
+}   t_color;
 
 typedef struct s_ambient
 {
@@ -30,7 +30,7 @@ typedef struct s_ambient
 
 typedef struct s_camera
 {
-    t_vec   position;
+    t_vec3   position;
     t_vec3  direction;
     int     fov;
 }   t_camera;
@@ -42,7 +42,7 @@ typedef struct s_light
     t_color color;
 }   t_light;
 
-typedef stfuct s_sphere
+typedef struct s_sphere
 {
     t_vec3  center;
     double  diameter;
@@ -56,7 +56,7 @@ typedef struct s_scene
     t_light     light;
     t_sphere    sphere;
     int         has_ambient;
-    int         had_camera;
+    int         has_camera;
     int         has_light;
     int         has_sphere;
 }   t_scene;
