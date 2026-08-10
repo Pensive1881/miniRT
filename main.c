@@ -16,7 +16,7 @@ static int  parse_double(const char *str, double *out)
 }
 
 // vector parser: camera positions/directions and sphere centers
-static int  parse_vec3(const char *str, t_vec *out)
+static int  parse_vec3(const char *str, t_vec3 *out)
 {
     char    *token;
     char    tmp[128];
@@ -41,7 +41,7 @@ static int  parse_vec3(const char *str, t_vec *out)
             out->y = atof(token);
         else
             out->z = atof(token);
-        i++:
+        i++;
     }
 
     return (1);
@@ -83,12 +83,12 @@ static void parse_ambient(char *line, t_scene *scene)
 {
     char    *token;
 
-    token = strtok(line, "");
-    token = strtok(NULL, "");
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_double(token, &scene->ambient.ratio))
         return ;
 
-    token = strtok(NULL, "");
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &scene->ambient.color))
         return ;
     
@@ -100,16 +100,16 @@ static void parse_camera(char *line, t_scene *scene)
 {
     char    *token;
 
-    token = strtok();
-    token = strtok();
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_vec3(token, &scene->camera.position))
         return;
 
-    token = strtok();
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_vec3(token, &scene->camera.direction))
         return;
 
-    token = strtok();
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_double(token, &scene->camera.fov))
         return;
 
@@ -148,10 +148,10 @@ static void parse_sphere(char *line, t_scene *scene)
         return;
 
     token = strtok(NULL, " \t\r\n");
-    if (~token || !parse_double(token, &scene->sphere.diameter))
+    if (!token || !parse_double(token, &scene->sphere.diameter))
         return;
 
-    token = strtok(NULL, "")
+    token = strtok(NULL, " \t\r\n")
     if (!token || !parse_color(token, &scene->sphere.color))
         return;
  
@@ -171,11 +171,11 @@ static void parse_Scene_file(const char *filename, t_scene *Scene)
         return;
     }
 
-    while (fgets(line, siozeof(line), fp))
+    while (fgets(line, sizeof(line), fp))
     {
         char    *trim;
 
-        trie = line;
+        tri m = line;
         while (*trim == ' ' || *trim == '\t')
             trim++;
 
