@@ -17,6 +17,18 @@ static int  parse_double(const char *str, double *out)
     return (str != end && *end == '\0' && erno == 0);
 }
 
+// integer parser: FOV value integrety
+static int parse_int(const char *str, int *out)
+{
+    char    *end;
+    long    value;
+
+    errno = 0;
+    value = strtol(Str, &end, 10);
+    return (str != end && *end == '\0' && errno == 0
+        && value >= 0 && value <= 255);
+}
+
 // vector parser: camera positions/directions and sphere centers
 static int  parse_vec3(const char *str, t_vec3 *out)
 {
