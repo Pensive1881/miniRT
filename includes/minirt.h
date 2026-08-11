@@ -32,6 +32,8 @@ typedef struct s_camera
 {
     t_vec3   position;
     t_vec3  direction;
+    t_vec3	right;
+    t_vec3	up;
     int     fov;
 }   t_camera;
 
@@ -61,6 +63,12 @@ typedef struct s_scene
     int         has_sphere;
 }   t_scene;
 
+typedef	struct	s_ray
+{
+	t_vec3	origin;
+	t_vec3	dir; //always normalised
+}	t_ray;
+
 //vec3 functions
 t_vec3  vec3(double x, double y, double z);
 t_vec3  vec3_add(t_vec3 a, t_vec3 b);
@@ -73,4 +81,14 @@ double  vec3_len(t_vec3 v);
 t_vec3  vec3_norm(t_vec3 v);
 t_vec3  vec3_mul(t_vec3 a, t_vec3 b);
 
+//sphere.c
+double  intersect_sphere(t_ray ray, t_sphere *sp);
+t_vec3  sphere_normal(t_sphere *sp, t_vec3 hit_point);
+
+//ray.c
+t_vec3  ray_at(t_ray r, double t);
+
+//camera.c
+void    camera_init(t_camera *cam);
+t_ray   get_ray(t_camera *cam, int px, int py, int width, int height);
 #endif
