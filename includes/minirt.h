@@ -61,6 +61,8 @@ typedef struct s_scene
     int         has_camera;
     int         has_light;
     int         has_sphere;
+    int		width;
+    int		height;
 }   t_scene;
 
 typedef	struct	s_ray
@@ -91,4 +93,8 @@ t_vec3  ray_at(t_ray r, double t);
 //camera.c
 void    camera_init(t_camera *cam);
 t_ray   get_ray(t_camera *cam, int px, int py, int width, int height);
+
+//render.c
+void    render(t_scene *scene);
+
 #endif
