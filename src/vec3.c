@@ -1,5 +1,5 @@
 
-#include <minirt.h>
+#include "minirt.h"
 
 //creating a 3d vector
 t_vec3	vec3(double x, double y, double z)
