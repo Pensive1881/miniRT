@@ -35,6 +35,7 @@ static int parse_int(const char *str, int *out)
 static int  parse_vec3(const char *str, t_vec3 *out)
 {
     char    *token;
+    char    *save;
     char    tmp[128];
     int     i;
 
@@ -42,15 +43,16 @@ static int  parse_vec3(const char *str, t_vec3 *out)
         return (0);
     strcpy(tmp, str);
 
-    token = strtok(tmp, ",");
+    save = NULL;
+    token = strtok_r(tmp, ",", &save);
     if (!token)
         return (0);
     out->x = atof(token);
 
     i = 1;
-    while (i <=2)
+    while (i <= 2)
     {
-        token = strtok(NULL, ",");
+        token = strtok_r(NULL, ",", &save);
         if (!token)
             return (0);
         if (i == 1)
@@ -67,6 +69,7 @@ static int  parse_vec3(const char *str, t_vec3 *out)
 static int  parse_color(const char *str, t_color *out)
 {
     char    *token;
+    char    *save;
     char    tmp[128];
     int    i;
 
@@ -74,15 +77,16 @@ static int  parse_color(const char *str, t_color *out)
         return (0);
     strcpy(tmp, str);
 
-    token = strtok(tmp, ",");
+    save = NULL;
+    token = strtok_r(tmp, ",", &save);
     if (!token)
         return (0);
     out->r = atoi(token);
 
     i = 1;
-    while (i <=2)
+    while (i <= 2)
     {
-        token = strtok(NULL, ",");
+        token = strtok_r(NULL, ",", &save);
         if (!token)
             return (0);
         if (i == 1)
