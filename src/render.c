@@ -21,7 +21,7 @@ static	int vec3_to_colour(t_vec3 c)//will use it one our mlx funtions are ready
 	return ((r << 16) | (g << 8) | b);
 
 }
-void	render(t_scene *scene)
+void	render(t_scene *scene, t_mlx *mlx)
 {
 	int	x; //left to right (0 to width -1)
 	int	y; //top to bottom (0 to heigth -1)
