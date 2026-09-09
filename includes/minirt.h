@@ -17,7 +17,7 @@ typedef struct s_mlx
     void    *connection;
     void    *window;
     void    *image;
-    char    *pixel;
+    char    *pixels;
     int     bits_per_pixel;
     int     line_length;
     int     endian;
@@ -116,7 +116,7 @@ void    render(t_scene *scene, t_mlx *mlx);
 
 //mlx_app.c
 int     mlx_app_init(t_mlx *mlx, int width, int height);
-void    mlx_put_pixel(t_mlx, int x, int y, int color);
+void    mlx_put_pixel(t_mlx *mlx, int x, int y, int color);
 int     mlx_close(t_mlx *mlx);
 int     mlx_key_hook(int keycode, t_mlx *mlx);
 
