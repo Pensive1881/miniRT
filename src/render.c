@@ -56,5 +56,5 @@ void	render(t_scene *scene, t_mlx *mlx)
 		y++;
 	}
 	//the mlx put image to window function()
-	mlx_put_image_to_window(mlx->connection, mlx->window, mlx->image, 0, 0)
+	mlx_put_image_to_window(mlx->connection, mlx->window, mlx->image, 0, 0);
 }
