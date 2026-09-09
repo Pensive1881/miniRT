@@ -34,7 +34,7 @@ t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 //by scaling the direction by time(t), we can calculate exactly where the ray
 //is in 3D space at that exact moment.
 
-vex3	vec3_scale(t_vec3 v, double t)
+t_vex3	vec3_scale(t_vec3 v, double t)
 {
 	return (vec3(v.x * t, v.y * t, v.z * t));
 }
@@ -46,6 +46,6 @@ vex3	vec3_scale(t_vec3 v, double t)
 
 double	vec3_dot(t_vec3 a, t_vec3 b)
 {
-	return (vec3(a.x * b.x + a.y * b.y + a.z * b.z));
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }
 

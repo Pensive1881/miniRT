@@ -5,7 +5,7 @@
 //and know which way the sky is(up), crossing those two vectors gives the exact
 //right and left direction, allowing to draw a flat 2D screen in a 3d world
 
-t_vec3_cross(t_vec3 a, t_vec3 b)
+t_vec3	vec3_cross(t_vec3 a, t_vec3 b)
 {
 	double	x;
 	double	y;
