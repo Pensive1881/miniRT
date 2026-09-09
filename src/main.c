@@ -25,7 +25,7 @@ static int parse_int(const char *str, int *out)
 
     errno = 0;
     value = strtol(str, &end, 10);
-    if (str == end && *end != '\0' || errno != 0 && value >= 0 && value <= 255)
+    if (str == end || *end != '\0' || errno != 0 || value < 0 || value > 180)
         return (0);
     *out = (int)value;
     return (1);
@@ -261,15 +261,15 @@ int main(int argc, char **argv)
     print_scene(&scene);
     if (!scene.has_camera || !scene.has_sphere)
     {
-        fprintf(stderr, "Error\nScene needs a camera and sphere\n")
+        fprintf(stderr, "Error\nScene needs a camera and sphere\n");
         return (1);
     }
     scene.width = WINDOW_WIDTH;
     scene.height = WINDOW_HEIGHT;
-    camera_ianit(&scene.camera);
+    camera_init(&scene.camera);
     if (!mlx_app_init(&mlx, scene.width, scene.height))
     {
-        fprint(stderr, "Error\nCouldnot initialize MiniLibX\n");
+        fprintf(stderr, "Error\nCould not initialize MiniLibX\n");
         return (1);
     }
     render(&scene, &mlx);
