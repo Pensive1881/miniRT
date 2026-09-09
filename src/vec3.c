@@ -1,4 +1,3 @@
-
 #include "minirt.h"
 
 //creating a 3d vector
@@ -34,7 +33,7 @@ t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
 //by scaling the direction by time(t), we can calculate exactly where the ray
 //is in 3D space at that exact moment.
 
-t_vex3	vec3_scale(t_vec3 v, double t)
+t_vec3	vec3_scale(t_vec3 v, double t)
 {
 	return (vec3(v.x * t, v.y * t, v.z * t));
 }
