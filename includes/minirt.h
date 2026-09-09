@@ -118,6 +118,6 @@ void    render(t_scene *scene, t_mlx *mlx);
 int     mlx_app_init(t_mlx *mlx, int width, int height);
 void    mlx_put_pixel(t_mlx *mlx, int x, int y, int color);
 int     mlx_close(t_mlx *mlx);
-int     mlx_key_hook(int keycode, t_mlx *mlx);
+int     handle_key(int keycode, t_mlx *mlx);
 
 #endif
