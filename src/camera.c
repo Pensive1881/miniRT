@@ -27,7 +27,7 @@ t_ray	get_ray(t_camera *cam, int px, int py, int width, int height)
 	double	u = half_w * (2.0 * (px + 0.5) / width - 1.0);
 	double	v = half_w / aspect * (1.0 - 2.0 * (py + 0.5) / height);
 	//combine camera basis vectors to get world space direction
-	dir = vec3_add(cam->direction, vec3_add(vec3_scale(cam->right, u),
+	t_vec3	dir = vec3_add(cam->direction, vec3_add(vec3_scale(cam->right, u),
 				vec3_scale(cam->up, v)));
 	//ray assembly
 	//all perspective rays start at the camera's loation in space

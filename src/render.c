@@ -49,11 +49,11 @@ void	render(t_scene *scene)
 			}
 			else
 				colour = vec3(0, 0, 0);
-			out_image_put_pixel();
+			//out_image_put_pixel();
 			x++;
 		}
 		y++;
 	}
-	the mlx put image to window function()
+	//the mlx put image to window function()
 
 }
