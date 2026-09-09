@@ -8,6 +8,23 @@
 # include <string.h>
 # include "mlx.h"
 
+# define WINDOW_WIDTH 800
+# define WINDOW_HEIGHT 600
+# define ESC_KEY 53
+
+typedef struct s_mlx
+{
+    void    *connection;
+    void    *window;
+    void    *image;
+    char    *pixel;
+    int     bits_per_pixel;
+    int     line_length;
+    int     endian;
+    int     width;
+    int     height;
+}   t_mlx;
+
 typedef struct s_vec3
 {
     double  x;
@@ -95,6 +112,12 @@ void    camera_init(t_camera *cam);
 t_ray   get_ray(t_camera *cam, int px, int py, int width, int height);
 
 //render.c
-void    render(t_scene *scene);
+void    render(t_scene *scene, t_mlx *mlx);
+
+//mlx_app.c
+int     mlx_app_init(t_mlx *mlx, int width, int height);
+void    mlx_put_pixel(t_mlx, int x, int y, int color);
+int     mlx_close(t_mlx *mlx);
+int     mlx_key_hook(int keycode, t_mlx *mlx);
 
 #endif
