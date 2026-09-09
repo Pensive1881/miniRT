@@ -1,23 +1,23 @@
 #include "minirt.h"
 
-int mlx_close(mlx *mlx)
+int     mlx_close(mlx *mlx)
 {
     if (mlx->image)
         mlx_destroy_image(mlx->connection, mlx->image);
-    if (mlx->wiundow)
+    if (mlx->window)
         mlx_destroy_window(mlx->connection, mlx->window);
     exit(EXIT_SUCCESS);
     return (0);
 }
 
-int mlx_key_hook(int keycode, t_mlx *mlx)
+int     handle_key(int keycode, t_mlx *mlx)
 {
     if (keycode == ESC_KEY)
         mlx_close(mlx);
     return (0);
 }
 
-void    mlx_put_pixel(t_mlx, int x, int y, int color)
+void    mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
 {
     char    *destination;
 
@@ -27,7 +27,7 @@ void    mlx_put_pixel(t_mlx, int x, int y, int color)
     *(unsigned int *)destination = (unsigned int)color;
 }
 
-int mlx_app_init(t_mlx *mlx, int width, int height)
+int     mlx_app_init(t_mlx *mlx, int width, int height)
 {
     memset();
     mlx->width = width;
@@ -45,7 +45,7 @@ int mlx_app_init(t_mlx *mlx, int width, int height)
         mlx->window = NULL
         return (0);
     }
-    mlx->pixell = mlx_get_data_addr(mlx->connection, &mlx->bits_per_pixel,
+    mlx->pixels = mlx_get_data_addr(mlx->connection, &mlx->bits_per_pixel,
                                     &mlx->line_length, &mlx->endian);
     if (!mlx->pixels)
     {
