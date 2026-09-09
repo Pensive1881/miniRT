@@ -23,11 +23,12 @@ static int parse_int(const char *str, int *out)
     char    *end;
     long    value;
 
-    (void)out;
     errno = 0;
     value = strtol(str, &end, 10);
-    return (str != end && *end == '\0' && errno == 0
-        && value >= 0 && value <= 255);
+    if (str == end && *end != '\0' || errno != 0 && value >= 0 && value <= 255)
+        return (0);
+    *out = (int)value;
+    return (1);
 }
 
 // vector parser: camera positions/directions and sphere centers
@@ -247,6 +248,7 @@ static void print_scene(const t_scene *scene)
 int main(int argc, char **argv)
 {
     t_scene scene;
+    t_mlx   mlx;
 
     if (argc != 2)
     {
@@ -257,6 +259,21 @@ int main(int argc, char **argv)
     init_scene(&scene);
     parse_scene_file(argv[1], &scene);
     print_scene(&scene);
+    if (!scene.has_camera || !scene.has_sphere)
+    {
+        fprintf(stderr, "Error\nScene needs a camera and sphere\n")
+        return (1);
+    }
+    scene.width = WINDOW_WIDTH;
+    scene.height = WINDOW_HEIGHT;
+    camera_ianit(&scene.camera);
+    if (!mlx_app_init(&mlx, scene.width, scene.height))
+    {
+        fprint(stderr, "Error\nCouldnot initialize MiniLibX\n");
+        return (1);
+    }
+    render(&scene, &mlx);
+    mlx_loop(mlx.connection);
 
     return (0);
 }
