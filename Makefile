@@ -2,11 +2,25 @@ NAME		= miniRT
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
+UNAME_S		:= $(shell uname -s)
+
+ifeq ($(UNAME_S),Darwin)
 MLX_DIR		= minilibx_macos
 MLX_LIB		= $(MLX_DIR)/libmlx.a
 INCLUDES	= -Iincludes -I$(MLX_DIR)
 LIBS		= -L$(MLX_DIR) -lmlx \
 			  -framework OpenGL -framework AppKit -lm
+else
+MLX_DIR		?= minilibx-linux
+ifeq ($(wildcard $(MLX_DIR)/Makefile),)
+ifneq ($(wildcard $(HOME)/Downloads/minilibx-linux/Makefile),)
+MLX_DIR		:= $(HOME)/Downloads/minilibx-linux
+endif
+endif
+MLX_LIB		= $(MLX_DIR)/libmlx.a
+INCLUDES	= -Iincludes -I$(MLX_DIR)
+LIBS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+endif
 
 SRCS		= src/main.c \
 			  src/mlx_app.c \
