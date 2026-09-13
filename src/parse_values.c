@@ -51,8 +51,8 @@ int parse_vec3(const char *str, t_vec3 *out)
         return (0);
     *first = '\0';
     *second = '\0';
-    if (!parse_double(tmp, &value.x) || !parse_double(first + 1, &value.y
-                                     || !parse_double(second + 1, &value.z)))
+    if (!parse_double(tmp, &value.x) || !parse_double(first + 1, &value.y)
+                                     || !parse_double(second + 1, &value.z))
         return (0);
     *out = value;
     return (1);
