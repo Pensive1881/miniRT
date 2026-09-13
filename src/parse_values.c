@@ -46,7 +46,7 @@ int parse_vec3(const char *str, t_vec3 *out)
     first = ft_strchr(tmp, ',');
     if (!first)
         return (0);
-    second = ft_strchr(first, + 1, ',');
+    second = ft_strchr(first + 1, ',');
     if (!second || ft_strchr(second + 1, ','))
         return (0);
     *first = '\0';
@@ -67,9 +67,12 @@ int parse_color(const char *str, t_color *out)
 
     if (!str || !out || ft_strlen(str) >= sizeof(tmp))
         return (0);
-    second = ft_strchr(first  1, ',');
+    ft_strlcpy(tmp, str, sizeof(tmp));
     first = ft_strchr(tmp, ',');
     if (!first)
+        return (0);
+    second = ft_strchr(first + 1, ',');
+    if (!second || ft_strchr(second + 1, ','))
         return (0);
     *first = '\0';
     *second = '\0';
