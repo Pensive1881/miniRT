@@ -1,5 +1,6 @@
 #include "minirt.h"
 #include <errno.h>
+#include <limits.h>
 
 int parse_double(const char *str, double *out)
 {
@@ -21,11 +22,12 @@ int parse_int(const char *str, int *out)
     char    *end;
     long    value;
 
-    if ()
+    if (!str || !*str || !out)
         return (0);
     errno = 0;
     value = strtol(str, &end, 10);
-    if ()
+    if (str == end || *end != '\0' || errno == ERANGE
+                   || value <<INT_MIN || value > INT_MAX)
         return (0);
     *out = (int)value;
     return (1);
@@ -63,7 +65,7 @@ int parse_color(const char *str, t_color *out)
     char    *second;
     t_color value;
 
-    if (!str || !out || ft_strlen(Str) >= sizeof(tmp)))
+    if (!str || !out || ft_strlen(Str) >= sizeof(tmp))
         return (0);
     second = ft_strchr(first  1, ',');
     first = ft_strchr(tmp, ',');
