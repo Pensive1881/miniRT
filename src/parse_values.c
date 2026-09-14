@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <limits.h>
 
+// parses a string as a finite double
 int parse_double(const char *str, double *out)
 {
     char    *end;
@@ -17,6 +18,7 @@ int parse_double(const char *str, double *out)
     return (1);
 }
 
+// parses a string as an integer
 int parse_int(const char *str, int *out)
 {
     char    *end;
@@ -33,6 +35,7 @@ int parse_int(const char *str, int *out)
     return (1);
 }
 
+// parses three comma-seperated vector coordinates
 int parse_vec3(const char *str, t_vec3 *out)
 {
     char    tmp[128];
@@ -58,6 +61,7 @@ int parse_vec3(const char *str, t_vec3 *out)
     return (1);
 }
 
+// parses an RBG color, validates its range
 int parse_color(const char *str, t_color *out)
 {
     char    tmp[128];
