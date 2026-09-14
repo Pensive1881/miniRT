@@ -23,7 +23,7 @@ int parse_ambient(char **fields, t_scene *scene)
 {
     t_ambient    value;
 
-    if (scene->has_ambient || !field[1] || !fields[2] || fields[3])
+    if (scene->has_ambient || !fields[1] || !fields[2] || fields[3])
         return (0);
     if (!parse_double(fields[1], &value.ratio)
         || !parse_color(fields[2], &value.color)
