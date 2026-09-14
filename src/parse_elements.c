@@ -44,7 +44,7 @@ int parse_camera(char **fields, t_scene *scene)
         return (0);
     if (!parse_vec3(fields[1], &value.position)
         || !parse_vec3(fields[2], &value.direction)
-        || !parse_int(fields[2], &value.direction)
+        || !parse_int(fields[3], &value.fov)
         || !valid_orientation(value.direction)
         || value.fov < 0 || value.fov > 180)
         return (0);
@@ -64,7 +64,7 @@ int parse_light(char **fields, t_scene *scene)
     if (!parse_vec3(fields[1], &value.position)
         || !parse_double(fields[2], &value.ratio)
         || !parse_color(fields[3], &value.color)
-        || !parse_ratio(value.ratio))
+        || !valid_ratio(value.ratio))
         return (0);
     scene->light = value;
     scene->has_light = 1;
