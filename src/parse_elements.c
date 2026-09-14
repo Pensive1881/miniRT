@@ -23,7 +23,7 @@ int parse_ambient(char **fields, t_scene *scene)
 {
     t_ambient    value;
 
-    if (scene->has_ambient | !field[1] || !fields[2] || fields[3])
+    if (scene->has_ambient || !field[1] || !fields[2] || fields[3])
         return (0);
     if (!parse_double(fields[1], &value.ratio)
         || !parse_color(fields[2], &value.color)
@@ -80,7 +80,7 @@ int parse_sphere(char **fields, t_scene *scene)
         || !fields[3] || fields[4])
         return (0);
     if (!parse_vec3(fields[1], &value.center)
-        || !parse_double(fields[2], & value.diameter)
+        || !parse_double(fields[2], &value.diameter)
         || !parse_color(fields[3], &value.color)
         || value.diameter <= 0.0)
         return (0);
