@@ -63,6 +63,7 @@ static int  collect_line(int fd, char **line)
     capacity = 0;
     while (1)
     {
+        status = read_character(fd, &character);
         if (status < 0)
             return (-1);
         if (status == 0)
