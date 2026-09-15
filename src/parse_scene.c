@@ -1,6 +1,6 @@
 #include "minirt.h"
+#include <fcntl.h>
 
-#define MAX_LINE_LENTH 1024
 #define MAX_FIELDS 8
 
 // checke whether a character has whitespace
