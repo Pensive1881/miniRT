@@ -89,6 +89,24 @@ typedef	struct	s_ray
 	t_vec3	dir; //always normalised
 }	t_ray;
 
+//parse_values.c
+int     parse_double(const char *str, double *out);
+int     parse_int(const char *str, int *out);
+int     parse_vec3(const char *Str, t_vec3 *out);
+int     parse_color(const char *str, t_color *out);
+
+//parse_elements.c
+int     parse_ambient(char **fields, t_scene *scene);
+int     parse_camera(char **fields, t_scene *scene);
+int     parse_light(char **fields, t_scene *scene);
+int     parse_sphere(char **fields, t_scene *Scene);
+
+//parse_read.c
+int     read_scene_line(int fd, char **line);
+
+// parse_scene.c
+int     parse_scene(const char *filename, t_scene *scene);
+
 //vec3 functions
 t_vec3  vec3(double x, double y, double z);
 t_vec3  vec3_add(t_vec3 a, t_vec3 b);
