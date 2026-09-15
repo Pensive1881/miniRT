@@ -10,9 +10,9 @@ static int  read_character(int fd, char *character)
     ssize_t result;
 
     result = read(fd, character, 1);
-    while (result < - && errno == EINTR)
+    while (result < 0 && errno == EINTR)
         result = read(fd, character, 1);
-    return ((int) result);
+    return ((int)result);
 }
 
 // expands the line buffer without losing its contents
@@ -51,8 +51,8 @@ static int  append_character(char **line, size_t *length, size_t *capcity, char 
     return (1);
 }
 
-// colelcts character until a newline, EOF, or error
-static int  colect_line(int fd, char **line)
+// collects character until a newline, EOF, or error
+static int  collect_line(int fd, char **line)
 {
     size_t  length;
     size_t  capacity;
@@ -66,7 +66,7 @@ static int  colect_line(int fd, char **line)
         if (status < 0)
             return (-1);
         if (status == 0)
-            return (length != 0)
+            return (length != 0);
         if (!append_character(line, &length, &capacity, character))
             return (-1);
         if (character == '\n')
@@ -80,15 +80,15 @@ int         read_scene_line(int fd, char **line)
     int status;
 
     if (!line)
-        return (-1)
+        return (-1);
     *line = NULL;
     if (fd < 0)
-        return (-1)
+        return (-1);
     status = collect_line(fd, line);
     if (status < 0)
-    [
+    {
         free(*line);
         *line = NULL;
-    ]
+    }
     return (status);
 }
