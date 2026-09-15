@@ -3,32 +3,32 @@
 
 #define MAX_FIELDS 8
 
-// checke whether a character has whitespace
+// check whether a character has whitespace
 static int  is_space(char c)
 {
     return (c == ' ' || c == '\t' || c == '\n'
-         || c== '\r' || c == '\v' || c == '\f');
+         || c == '\r' || c == '\v' || c == '\f');
 }
 
-// checke wehter two strings are equal
-static int  star_equal(const char *first, const char *second)
+// check wheter two strings are equal
+static int  str_equal(const char *first, const char *second)
 {
     size_t  length;
 
     if (!first || !second)
         return (0);
-    length = ft_Strlen(first);
-    if (length != ft_strlen(Second))
+    length = ft_strlen(first);
+    if (length != ft_strlen(second))
         return (0);
-    return (ft_strncmp(first, second, length == 0));
+    return (ft_strncmp(first, second, length) == 0);
 }
 
-// seperates a line into whitespace-delimited fields
+// separates a line into whitespace-delimited fields
 static int  split_fields(char *line, char **fields)
 {
     int count;
 
-    cout = 0;
+    count = 0;
     while (*line)
     {
         while (*line && is_space(*line))
@@ -48,12 +48,12 @@ static int  split_fields(char *line, char **fields)
 }
 
 // sends an element to its matching parser
-static int  dispatch_element(char **fields, t_Scene *svcene)
+static int  dispatch_element(char **fields, t_scene *svcene)
 {
     if (str_equal(fields[0], "A"))
         return (parse_ambient(fields, scene));
-    if (str_equal(field[0], "C"))
-        return (parse_camer(fields, scene));
+    if (str_equal(fields[0], "C"))
+        return (parse_camera(fields, scene));
     if (str_equal(fields[0], "L"))
         return (parse_light(fields, scene));
     if (str_equal(fields[0], "sp"))
@@ -67,16 +67,16 @@ static int  parse_line(char *line, t_scene *scene)
     char    *fields[MAX_FIELDS];
     int     count;
 
-    coutn = split_fields(line, fields);
+    count = split_fields(line, fields);
     if (count < 0)
         return (0);
     if (count == 0)
-        return (0);
-    return (dispatch_elements(fields, scene));
+        return (1);
+    return (dispatch_element(fields, scene));
 }
 
 // checks that the filename ends in .rt
-static int  void_extension(const char *filename)
+static int  valid_extension(const char *filename)
 {
     size_t  length;
 
@@ -105,7 +105,7 @@ int         parse_scene(const char *filename, t_scene *scene)
 
     if (!scene || !valid_extension(filename))
         return (0);
-    fd = open(filename, ORDONLY);
+    fd = open(filename, O_RDONLY);
     if (fd < 0)
         return (0);
     valid = 1;
