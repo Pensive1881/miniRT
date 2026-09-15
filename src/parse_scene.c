@@ -48,7 +48,7 @@ static int  split_fields(char *line, char **fields)
 }
 
 // sends an element to its matching parser
-static int  dispatch_element(char **fields, t_scene *svcene)
+static int  dispatch_element(char **fields, t_scene *scene)
 {
     if (str_equal(fields[0], "A"))
         return (parse_ambient(fields, scene));
