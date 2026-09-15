@@ -101,6 +101,7 @@ int         parse_scene(const char *filename, t_scene *scene)
 {
     char    *line;
     int     fd;
+    int     status;
     int     valid;
 
     if (!scene || !valid_extension(filename))
@@ -109,14 +110,15 @@ int         parse_scene(const char *filename, t_scene *scene)
     if (fd < 0)
         return (0);
     valid = 1;
-    line = get_next_line(fd);
-    while (line)
+    status = read_scene_line(fd, &line);
+    while (status == 1)
     {
-        if (!parse_line(line, scene))
-            valid = 0;
+        valid = parse_line(line, scene);
         free(line);
-        line = get_next_line(fd);
+        if (!valid)
+            break ;
+        status = read_scene_line(fd, &line);
     }
     close(fd);
-    return (valid && scene_is_complete(scene));
+    return (valid && status == 0 && scene_is_complete(scene));
 }
