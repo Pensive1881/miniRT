@@ -38,7 +38,7 @@ static int  grow_buffer(char **line, size_t length, size_t *capacity)
 }
 
 // appends a character and maintains the string terminator
-static int  append_character(char **line, size_t *length, size_t *capcity, char character)
+static int  append_character(char **line, size_t *length, size_t *capacity, char character)
 {
     if (*length + 1 >= *capacity)
     {
