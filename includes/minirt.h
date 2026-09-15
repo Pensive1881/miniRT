@@ -92,14 +92,14 @@ typedef	struct	s_ray
 //parse_values.c
 int     parse_double(const char *str, double *out);
 int     parse_int(const char *str, int *out);
-int     parse_vec3(const char *Str, t_vec3 *out);
+int     parse_vec3(const char *str, t_vec3 *out);
 int     parse_color(const char *str, t_color *out);
 
 //parse_elements.c
 int     parse_ambient(char **fields, t_scene *scene);
 int     parse_camera(char **fields, t_scene *scene);
 int     parse_light(char **fields, t_scene *scene);
-int     parse_sphere(char **fields, t_scene *Scene);
+int     parse_sphere(char **fields, t_scene *scene);
 
 //parse_read.c
 int     read_scene_line(int fd, char **line);
