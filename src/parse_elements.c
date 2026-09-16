@@ -6,7 +6,7 @@ static int  valid_ratio(double ratio)
     return (ratio >= 0.0 && ratio <= 1.0);
 }
 
-//checks that an orientation vector is valid
+// checks that an orientation vector is valid
 static int  valid_orientation(t_vec3 vector)
 {
     double length;
@@ -19,9 +19,10 @@ static int  valid_orientation(t_vec3 vector)
     return (length > 0.0);
 }
 // parses the ambient-light values
-int parse_ambient(char **line, t_scene *scene)
+int parse_ambient(char *line, t_scene *scene)
 {
-    t_ambient    value;
+    char        *token;
+    t_ambient   value;
 
     if (scene->has_ambient)
         return (0);
@@ -29,10 +30,10 @@ int parse_ambient(char **line, t_scene *scene)
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_double(token, &value.ratio))
         return (0);
-    token = strtok(NULL, " \t\r\n";)
+    token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &value.color))
         return (0);
-    if (strtok(NULL, " \t\r\n" || !valid_ratio(value. ratio)))
+    if (strtok(NULL, " \t\r\n") || !valid_ratio(value. ratio))
         return (0);
     scene->ambient = value;
     scene->has_ambient = 1;
@@ -40,7 +41,7 @@ int parse_ambient(char **line, t_scene *scene)
 }
 
 // parses the camera values
-int parse_camera(char **line, t_scene *scene)
+int parse_camera(char *line, t_scene *scene)
 {
     char        *token;
     t_camera    value;
@@ -57,7 +58,7 @@ int parse_camera(char **line, t_scene *scene)
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_int(token, &value.fov))
         return (0);
-    if (strtok(NULL, " \t\r\n") || !valid_orientation(value. directyion) 
+    if (strtok(NULL, " \t\r\n") || !valid_orientation(value.direction) 
         || value.fov < 0 || value.fov > 180)
         return (0);
     scene->camera = value;
@@ -66,7 +67,7 @@ int parse_camera(char **line, t_scene *scene)
 }
 
 // parses the light values
-int parse_light(char **line, t_scene *scene)
+int parse_light(char *line, t_scene *scene)
 {
     t_light     *token;
     t_light     value;
@@ -75,14 +76,15 @@ int parse_light(char **line, t_scene *scene)
         return (0);
     token = strtok(line, " \t\r\n");
     token = strtok(NULL, " \t\r\n");
-    if (!token || !prase_vec3(token, &value.position))
+    if (!token || !parse_vec3(token, &value.position))
         return (0);
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_double(token, &value.ratio))
+        return (0);
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &value.color))
         return (0);
-    if (strtok(NULL, " \t\r\n") || !validratio(value.ratio))
+    if (strtok(NULL, " \t\r\n") || !valid_ratio(value.ratio))
         return (0);
     scene->light = value;
     scene->has_light = 1;
@@ -99,10 +101,10 @@ int parse_sphere(char **line, t_scene *scene)
         return (0);
     token = strtok(line, " \t\r\n");
     token = strtok(NULL, " \t\r\n");
-    if (!token || !parse_vec3(token, &value, center))
+    if (!token || !parse_vec3(token, &value.center))
         return (0);
-    token = strtok(NUJLL, " \t\r\n");
-    if (!token || !parse_vec3(token &value.diameter))
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_double(token &value.diameter))
         return (0);
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &value.color))
