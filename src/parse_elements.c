@@ -19,15 +19,20 @@ static int  valid_orientation(t_vec3 vector)
     return (length > 0.0);
 }
 // parses the ambient-light values
-int parse_ambient(char **fields, t_scene *scene)
+int parse_ambient(char **line, t_scene *scene)
 {
     t_ambient    value;
 
-    if (scene->has_ambient || !fields[1] || !fields[2] || fields[3])
+    if (scene->has_ambient)
         return (0);
-    if (!parse_double(fields[1], &value.ratio)
-        || !parse_color(fields[2], &value.color)
-        || !valid_ratio(value.ratio))
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_double(token, &value.ratio))
+        return (0);
+    token = strtok(NULL, " \t\r\n";)
+    if (!token || !parse_color(token, &value.color))
+        return (0);
+    if (strtok(NULL, " \t\r\n" || !valid_ratio(value. ratio)))
         return (0);
     scene->ambient = value;
     scene->has_ambient = 1;
@@ -35,17 +40,24 @@ int parse_ambient(char **fields, t_scene *scene)
 }
 
 // parses the camera values
-int parse_camera(char **fields, t_scene *scene)
+int parse_camera(char **line, t_scene *scene)
 {
+    char        *token;
     t_camera    value;
 
-    if (scene->has_camera || !fields[1] || !fields[2]
-        || !fields[3] || fields[4])
+    if (scene->has_camera)
         return (0);
-    if (!parse_vec3(fields[1], &value.position)
-        || !parse_vec3(fields[2], &value.direction)
-        || !parse_int(fields[3], &value.fov)
-        || !valid_orientation(value.direction)
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_vec3(token, &value.position))
+        return (0);
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_vec3(token, &value.direction))
+        return (0);
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_int(token, &value.fov))
+        return (0);
+    if (strtok(NULL, " \t\r\n") || !valid_orientation(value. directyion) 
         || value.fov < 0 || value.fov > 180)
         return (0);
     scene->camera = value;
@@ -54,17 +66,23 @@ int parse_camera(char **fields, t_scene *scene)
 }
 
 // parses the light values
-int parse_light(char **fields, t_scene *scene)
+int parse_light(char **line, t_scene *scene)
 {
-    t_light value;
+    t_light     *token;
+    t_light     value;
 
-    if (scene->has_light || !fields[1] || !fields[2]
-        || !fields[3] || fields[4])
+    if (scene->has_light)
         return (0);
-    if (!parse_vec3(fields[1], &value.position)
-        || !parse_double(fields[2], &value.ratio)
-        || !parse_color(fields[3], &value.color)
-        || !valid_ratio(value.ratio))
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !prase_vec3(token, &value.position))
+        return (0);
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_double(token, &value.ratio))
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_color(token, &value.color))
+        return (0);
+    if (strtok(NULL, " \t\r\n") || !validratio(value.ratio))
         return (0);
     scene->light = value;
     scene->has_light = 1;
@@ -72,17 +90,24 @@ int parse_light(char **fields, t_scene *scene)
 }
 
 // parses the sphere values
-int parse_sphere(char **fields, t_scene *scene)
+int parse_sphere(char **line, t_scene *scene)
 {
+    char        *token;
     t_sphere    value;
 
-    if (scene->has_sphere || !fields[1] || !fields[2]
-        || !fields[3] || fields[4])
+    if (scene->has_sphere)
         return (0);
-    if (!parse_vec3(fields[1], &value.center)
-        || !parse_double(fields[2], &value.diameter)
-        || !parse_color(fields[3], &value.color)
-        || value.diameter <= 0.0)
+    token = strtok(line, " \t\r\n");
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_vec3(token, &value, center))
+        return (0);
+    token = strtok(NUJLL, " \t\r\n");
+    if (!token || !parse_vec3(token &value.diameter))
+        return (0);
+    token = strtok(NULL, " \t\r\n");
+    if (!token || !parse_color(token, &value.color))
+        return (0);
+    if (strtok(NULL, " \t\r\n") || value.diameter <= 0.0)
         return (0);
     scene->sphere = value;
     scene->has_sphere = 1;
