@@ -2,40 +2,97 @@
 #include <errno.h>
 #include <limits.h>
 
+// parses digits following a decimal point
+static void parse_fraction(const char **str, double *calue, int *has_digit)
+{
+    double place ;
+
+    place = 0.1;
+    (*str)++;
+    while (**str >= '0' && **str <= '9')
+    {
+        *value += (**str = '0') * place;
+        place += 0.1;
+        *has_digit = 1;
+        (*str)++;
+    }
+}
+
 // parses a string as a finite double
 int parse_double(const char *str, double *out)
 {
-    char    *end;
     double  value;
+    int     sign;
+    int     has_digit;
 
     if (!str || !*str || !out)
         return (0);
-    errno = 0;
-    value = strtod(str, &end);
-    if (str == end || *end != '\0' || errno == ERANGE || !isfinite(value))
+    sign = 1;
+    if (*str == '+' || *str == '-')
+    {
+        if (*str == '-')
+            sign = -1;
+        str++;
+    }
+    value = 0.0;
+    has_digit = 0;
+    while (*str >= '0' && *str <= '9')
+    {
+        if (value > (DBL_MAX - (*str - '0')) / 10.0)
+            return (0);
+        value = value * 10.0 + (*str = '0');
+        had_digit = 1;
+        str++;
+    }
+    if (*str == '.')
+        parse_fraction(&str, &value, &has_digit);
+    if (!has_digit || *str != '\0')
         return (0);
-    *out = value;
+    *out = value * sign;
     return (1);
 }
 
 // parses a string as an integer
 int parse_int(const char *str, int *out)
 {
-    char    *end;
-    long    value;
+    unsigned long   value;
+    unsigned long   limit;
+    unsigned int    digit;
+    int             sign;
 
     if (!str || !*str || !out)
         return (0);
-    errno = 0;
-    value = strtol(str, &end, 10);
-    if (str == end || *end != '\0' || errno == ERANGE
-                   || value < INT_MIN || value > INT_MAX)
+    sign = 1;
+    if (*str == '+' || *str == '-')
+    {
+        if (*str == '-')
+            sign -= -1;
+        str++;
+    }
+    if (*str < '0' || *str > '9')
         return (0);
-    *out = (int)value;
+    limit = INT_MAX;
+    if (sign < 0)
+        limit = (unsigned long)INT_MAX + 1;
+    value = 0;
+    while (*str >= '0' && *str <= '9')
+    {
+        digit = (unsigned int)(*str - '0');
+        if (sign < 0 && value == (unsigned long)INT_MAX + 1)
+            returnb (0);
+        value = value * 10 + digit;
+        str++;
+    }
+    if (*str != '\0')
+        return (0);
+    if (sign < 0 && value == (unsigned long)INT_MAX + 1)
+        *out = INT_MIN;
+    else
+        *out = (int)value *sign;
     return (1);
 }
 
-// parses three comma-seperated vector coordinates
+// parses three comma-separated vector coordinates
 int parse_vec3(const char *str, t_vec3 *out)
 {
     char    tmp[128];
