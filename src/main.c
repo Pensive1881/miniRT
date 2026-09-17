@@ -1,5 +1,4 @@
 #include "minirt.h"
-#include <errno.h>
 
 // scene initializer: resets the scene to zero
 static void init_scene(t_scene *scene)
