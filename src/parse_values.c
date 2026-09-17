@@ -1,5 +1,5 @@
 #include "minirt.h"
-#include <errno.h>
+#include <float.h>
 #include <limits.h>
 
 // parses digits following a decimal point
