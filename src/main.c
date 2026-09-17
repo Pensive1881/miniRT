@@ -54,7 +54,7 @@ int main(int argc, char **argv)
     init_scene(&scene);
     if (!parse_scene(argv[1], &scene))
     {
-        fprint(stderr, "Error\nInvalid scene file\n");
+        fprintf(stderr, "Error\nInvalid scene file\n");
         return (1);
     }
     print_scene(&scene);
