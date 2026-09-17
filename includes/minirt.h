@@ -136,4 +136,9 @@ void    mlx_put_pixel(t_mlx *mlx, int x, int y, int color);
 int     mlx_close(t_mlx *mlx);
 int     handle_key(int keycode, t_mlx *mlx);
 
+//lighting.c
+t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal);
+t_vec3	calc_ambient(t_scene *scene, t_color obj_colour);
+t_vec3	calc_diffuse(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal);
+
 #endif
