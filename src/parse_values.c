@@ -66,7 +66,7 @@ int parse_int(const char *str, int *out)
     if (*str == '+' || *str == '-')
     {
         if (*str == '-')
-            sign -= -1;
+            sign = -1;
         str++;
     }
     if (*str < '0' || *str > '9')
@@ -78,7 +78,7 @@ int parse_int(const char *str, int *out)
     while (*str >= '0' && *str <= '9')
     {
         digit = (unsigned int)(*str - '0');
-        if (sign < 0 && value == (unsigned long)INT_MAX + 1)
+        if (value > (limit - digit) / 10)
             returnb (0);
         value = value * 10 + digit;
         str++;
