@@ -43,9 +43,7 @@ void	render(t_scene *scene, t_mlx *mlx)
 			{
 				hit_point = ray_at(ray, t);
 				normal = sphere_normal(&scene->sphere, hit_point);
-				colour = vec3((normal.x + 1) * 127.5,
-						(normal.y + 1) * 127.5,
-						(normal.z + 1) * 127.5);
+				colour = shade(scene, scene->sphere.color, hit_point, normal);
 			}
 			else
 				colour = vec3(0, 0, 0);
