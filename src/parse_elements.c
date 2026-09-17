@@ -18,6 +18,7 @@ static int  valid_orientation(t_vec3 vector)
     length = vec3_len(vector);
     return (length > 0.0);
 }
+
 // parses the ambient-light values
 int parse_ambient(char *line, t_scene *scene)
 {
@@ -33,7 +34,7 @@ int parse_ambient(char *line, t_scene *scene)
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &value.color))
         return (0);
-    if (strtok(NULL, " \t\r\n") || !valid_ratio(value. ratio))
+    if (strtok(NULL, " \t\r\n") || !valid_ratio(value.ratio))
         return (0);
     scene->ambient = value;
     scene->has_ambient = 1;
@@ -58,7 +59,7 @@ int parse_camera(char *line, t_scene *scene)
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_int(token, &value.fov))
         return (0);
-    if (strtok(NULL, " \t\r\n") || !valid_orientation(value.direction) 
+    if (strtok(NULL, " \t\r\n") || !valid_orientation(value.direction)
         || value.fov < 0 || value.fov > 180)
         return (0);
     scene->camera = value;
@@ -69,7 +70,7 @@ int parse_camera(char *line, t_scene *scene)
 // parses the light values
 int parse_light(char *line, t_scene *scene)
 {
-    t_light     *token;
+    char        *token;
     t_light     value;
 
     if (scene->has_light)
@@ -92,7 +93,7 @@ int parse_light(char *line, t_scene *scene)
 }
 
 // parses the sphere values
-int parse_sphere(char **line, t_scene *scene)
+int parse_sphere(char *line, t_scene *scene)
 {
     char        *token;
     t_sphere    value;
@@ -104,7 +105,7 @@ int parse_sphere(char **line, t_scene *scene)
     if (!token || !parse_vec3(token, &value.center))
         return (0);
     token = strtok(NULL, " \t\r\n");
-    if (!token || !parse_double(token &value.diameter))
+    if (!token || !parse_double(token, &value.diameter))
         return (0);
     token = strtok(NULL, " \t\r\n");
     if (!token || !parse_color(token, &value.color))
