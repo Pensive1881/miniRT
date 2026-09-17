@@ -26,6 +26,7 @@ SRCS		= src/main.c \
 			  src/parse_scene.c \
 			  src/mlx_app.c \
 			  src/render.c \
+			  src/lighting.c \
 			  src/camera.c \
 			  src/ray.c \
 			  src/sphere.c \
