@@ -2,7 +2,7 @@
 #include <fcntl.h>
 
 // skips spaces and tabs before an element
-static char *skip_space(chat *line)
+static char *skip_space(char *line)
 {
     while (*line == ' ' || *line == '\t')
         line++;
@@ -10,7 +10,7 @@ static char *skip_space(chat *line)
 }
 
 // sends an element to its matching parser
-static int  parse_element(Char *line, t_scene *scene)
+static int  parse_element(char *line, t_scene *scene)
 {
     if (ft_strncmp(line, "A ", 2) == 0)
         return (parse_ambient(line, scene));
