@@ -5,14 +5,14 @@
 // parses digits following a decimal point
 static void parse_fraction(const char **str, double *calue, int *has_digit)
 {
-    double place ;
+    double place;
 
     place = 0.1;
     (*str)++;
     while (**str >= '0' && **str <= '9')
     {
-        *value += (**str = '0') * place;
-        place += 0.1;
+        *value += (**str - '0') * place;
+        place *= 0.1;
         *has_digit = 1;
         (*str)++;
     }
@@ -40,8 +40,8 @@ int parse_double(const char *str, double *out)
     {
         if (value > (DBL_MAX - (*str - '0')) / 10.0)
             return (0);
-        value = value * 10.0 + (*str = '0');
-        had_digit = 1;
+        value = value * 10.0 + (*str - '0');
+        has_digit = 1;
         str++;
     }
     if (*str == '.')
@@ -88,7 +88,7 @@ int parse_int(const char *str, int *out)
     if (sign < 0 && value == (unsigned long)INT_MAX + 1)
         *out = INT_MIN;
     else
-        *out = (int)value *sign;
+        *out = (int)value * sign;
     return (1);
 }
 
