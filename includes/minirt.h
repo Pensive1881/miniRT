@@ -101,9 +101,6 @@ int     parse_camera(char *line, t_scene *scene);
 int     parse_light(char *line, t_scene *scene);
 int     parse_sphere(char *line, t_scene *scene);
 
-//parse_read.c
-int     read_scene_line(int fd, char **line);
-
 // parse_scene.c
 int     parse_scene(const char *filename, t_scene *scene);
 
