@@ -3,7 +3,7 @@
 #include <limits.h>
 
 // parses digits following a decimal point
-static void parse_fraction(const char **str, double *calue, int *has_digit)
+static void parse_fraction(const char **str, double *value, int *has_digit)
 {
     double place;
 
@@ -79,7 +79,7 @@ int parse_int(const char *str, int *out)
     {
         digit = (unsigned int)(*str - '0');
         if (value > (limit - digit) / 10)
-            returnb (0);
+            return (0);
         value = value * 10 + digit;
         str++;
     }
