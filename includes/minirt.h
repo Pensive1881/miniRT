@@ -11,7 +11,7 @@
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
-# define ESC_KEY 53
+# define ESC_KEY 65307
 
 typedef struct s_mlx
 {
