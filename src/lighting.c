@@ -1,9 +1,8 @@
 #include "minirt.h"
 //converts 
-static t_vec3 colour_to_vec3(t_colour c)
+static t_vec3 colour_to_vec3(t_color c)
 {
-	printf("MINIRT COLOURS");
-	return (c.r, c.g, c.b);
+	return (vec3(c.r, c.g, c.b));
 }
 
 //ambient :: ratio x ambient_colour x obj_colour
@@ -13,9 +12,10 @@ t_vec3	calc_ambient(t_scene *scene, t_color obj_colour)
 	t_vec3	amb;
 	t_vec3	obj;
 
-	amb = vec3_scale(colour_to_vec3(scene->ambient.colour), scene->ambient.ratio);
+	amb = vec3_scale(colour_to_vec3(scene->ambient.color), scene->ambient.ratio);
 	obj = colour_to_vec3(obj_colour);
-	return (vec3_mul(amb, vec3_scale(obj, 1.0 / 255.0)));
+	//changed the return to see the shades
+	return (vec3_scale(vec3_mul(amb, vec3_scale(obj, 1.0 / 255.0)), 1.0 / 255.0));
 	//scale obj to 0-1 so mul doesnt overflow
 }
 
@@ -31,7 +31,8 @@ t_vec3	calc_diffuse(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3
 	if (intensity < 0)
 		intensity = 0;
 	intensity = intensity * scene->light.ratio;
-	obj = colour_to_vec3(scene->light.color);
+	obj = colour_to_vec3(obj_colour);
+	light_col = colour_to_vec3(scene->light.color);
 	return (vec3_scale(vec3_mul(obj, vec3_scale(light_col, 1.0/255.0)), intensity / 255.0));
 }
 

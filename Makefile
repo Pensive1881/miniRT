@@ -1,7 +1,7 @@
 NAME		= miniRT
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -std=gnu17
 UNAME_S		:= $(shell uname -s)
 
 LIBFT_DIR	= libft
