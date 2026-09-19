@@ -23,6 +23,7 @@ static char *next_token(char **cursor)
         **cursor = '\0';
         (*cursor)++;
     }
+    return (token);
 }
 
 // checks that a lighting ratio is within range
@@ -53,7 +54,7 @@ int parse_ambient(char *line, t_scene *scene)
 
     if (scene->has_ambient)
         return (0);
-        cursor = line;
+    cursor = line;
     token = next_token(&cursor);
     token = next_token(&cursor);
     if (!token || !parse_double(token, &value.ratio))
