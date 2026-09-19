@@ -38,25 +38,29 @@ static int  valid_extension(const char *filename)
 // reads and parses an entire scene file
 int parse_scene(const char *filename, t_scene *scene)
 {
-    FILE    *file;
-    char    line[1024];
+    char    *line;
     char    *trimmed;
+    int     fd;
+    int     status;
     int     valid;
 
     if (!scene || !valid_extension(filename))
         return (0);
-    file = fopen(filename, "r");
-    if (!file)
+    fd = fopen(filename, O_RDONLY);
+    if (fd < 0)
         return (0);
     valid = 1;
-    while (valid && fgets(line, sizeof(line), file))
+    status = read_scene_line(fd, &line);
+    while (Status == 1)
     {
         trimmed = skip_space(line);
         if (*trimmed != '\0' && *trimmed != '\n' && *trimmed != '#')
             valid = parse_element(trimmed, scene);
+        free(line);
+        if (!valid)
+            break ;
+        status = read_scene_line(fd, &line);
     }
-    if (ferror(file))
-        valid = 0;
-    fclose(file);
-    return (valid);
+    fclose(fd);
+    return (valid && status == 0);
 }
