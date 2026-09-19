@@ -143,7 +143,7 @@ int parse_sphere(char *line, t_scene *scene)
     token = next_token(&cursor);
     if (!token || !parse_color(token, &value.color))
         return (0);
-    if (strtok(next_token(&cursor) || value.diameter <= 0.0)
+    if (next_token(&cursor) || value.diameter <= 0.0)
         return (0);
     scene->sphere = value;
     scene->has_sphere = 1;
