@@ -1,5 +1,5 @@
 #include "minirt.h"
-#include <fctl.h>
+#include <fcntl.h>
 
 // skips spaces and tabs before an element
 static char *skip_space(char *line)
@@ -52,7 +52,7 @@ int parse_scene(const char *filename, t_scene *scene)
         return (0);
     valid = 1;
     status = read_scene_line(fd, &line);
-    while (Status == 1)
+    while (status == 1)
     {
         trimmed = skip_space(line);
         if (*trimmed != '\0' && *trimmed != '\n' && *trimmed != '#')
