@@ -16,7 +16,7 @@ static char *next_token(char **cursor)
     token = *cursor;
     while (**cursor && **cursor != ' ' && **cursor != '\t'
         && **cursor != '\n' && **cursor != '\r'
-        && **cursor != '\v' && **cursor != '\f'))
+        && **cursor != '\v' && **cursor != '\f')
         (*cursor)++;
     if (**cursor)
     {
