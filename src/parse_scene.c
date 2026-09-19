@@ -46,7 +46,7 @@ int parse_scene(const char *filename, t_scene *scene)
 
     if (!scene || !valid_extension(filename))
         return (0);
-    fd = fopen(filename, O_RDONLY);
+    fd = open(filename, O_RDONLY);
     if (fd < 0)
         return (0);
     valid = 1;
@@ -61,6 +61,6 @@ int parse_scene(const char *filename, t_scene *scene)
             break ;
         status = read_scene_line(fd, &line);
     }
-    fclose(fd);
+    close(fd);
     return (valid && status == 0);
 }
