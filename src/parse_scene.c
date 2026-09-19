@@ -1,4 +1,5 @@
 #include "minirt.h"
+#include <fctl.h>
 
 // skips spaces and tabs before an element
 static char *skip_space(char *line)
