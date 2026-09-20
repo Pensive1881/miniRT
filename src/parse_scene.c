@@ -18,7 +18,7 @@ static int  read_scene_line(int fd, char *line, size_t size)
     size_t  index;
     ssize_t bytes;
 
-    if (!line ||msize < 2)
+    if (!line || size < 2)
         return (-1);
     index = 0;
     while (index + 1 < size)
@@ -29,11 +29,11 @@ static int  read_scene_line(int fd, char *line, size_t size)
         if (bytes == 0)
             break ;
         line[index++] = character;
-        if (charactrer == '\n')
+        if (character == '\n')
             break ;
     }
     line[index] = '\0';
-    if (index == 0 & & bytes == 0)
+    if (index == 0 && bytes == 0)
         return (0);
     if (index + 1 == size && line[index - 1] != '\n')
         return (-1);
