@@ -80,7 +80,7 @@ int parse_scene(const char *filename, t_scene *scene)
     if (fd < 0)
         return (0);
     valid = 1;
-    status = read_scene_line(fd, &line);
+    status = read_scene_line(fd, line, sizeof(line));
     while (status == 1)
     {
         trimmed = skip_space(line);
@@ -89,7 +89,7 @@ int parse_scene(const char *filename, t_scene *scene)
         free(line);
         if (!valid)
             break ;
-        status = read_scene_line(fd, &line);
+        status = read_scene_line(fd, line, sizeof(line));
     }
     close(fd);
     return (valid && status == 0);
