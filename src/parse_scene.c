@@ -1,6 +1,8 @@
 #include "minirt.h"
 #include <fcntl.h>
 
+#define MAX_SCENE_LINE 1024
+
 // skips spaces and tabs before an element
 static char *skip_space(char *line)
 {
@@ -69,6 +71,7 @@ static int  valid_extension(const char *filename)
 int parse_scene(const char *filename, t_scene *scene)
 {
     char    *line;
+    char    line[MAX_SCENE_LINE];
     char    *trimmed;
     int     fd;
     int     status;
