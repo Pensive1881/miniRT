@@ -70,7 +70,6 @@ static int  valid_extension(const char *filename)
 // reads and parses an entire scene file
 int parse_scene(const char *filename, t_scene *scene)
 {
-    char    *line;
     char    line[MAX_SCENE_LINE];
     char    *trimmed;
     int     fd;
@@ -89,7 +88,6 @@ int parse_scene(const char *filename, t_scene *scene)
         trimmed = skip_space(line);
         if (*trimmed != '\0' && *trimmed != '\n' && *trimmed != '#')
             valid = parse_element(trimmed, scene);
-        free(line);
         if (!valid)
             break ;
         status = read_scene_line(fd, line, sizeof(line));
