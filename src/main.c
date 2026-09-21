@@ -53,7 +53,7 @@ int main(int argc, char **argv)
     init_scene(&scene);
     if (!parse_scene(argv[1], &scene))
     {
-        ft_putstr_fd("Error\nInvalid scene file\n", 2;
+        ft_putstr_fd("Error\nInvalid scene file\n", 2);
         return (1);
     }
     print_scene(&scene);
