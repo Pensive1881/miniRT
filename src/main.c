@@ -3,7 +3,7 @@
 // scene initializer: resets the scene to zero
 static void init_scene(t_scene *scene)
 {
-    memset(scene, 0, sizeof(*scene));
+    ft_bzero(scene, sizeof(*scene));
 }
 // debug printer
 static void print_scene(const t_scene *scene)
@@ -46,20 +46,20 @@ int main(int argc, char **argv)
 
     if (argc != 2)
     {
-        fprintf(stderr, "Usage: %s scene.rt\n", argv[0]);
+        printf("Usage: %s scene.rt\n", argv[0]);
         return (1);
     }
 
     init_scene(&scene);
     if (!parse_scene(argv[1], &scene))
     {
-        fprintf(stderr, "Error\nInvalid scene file\n");
+        ft_putstr_fd("Error\nInvalid scene file\n", 2;
         return (1);
     }
     print_scene(&scene);
     if (!scene.has_camera || !scene.has_sphere)
     {
-        fprintf(stderr, "Error\nScene needs a camera and sphere\n");
+        ft_putstr_fd("Error\nScene needs a camera and sphere\n", 2);
         return (1);
     }
     scene.width = WINDOW_WIDTH;
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
     camera_init(&scene.camera);
     if (!mlx_app_init(&mlx, scene.width, scene.height))
     {
-        fprintf(stderr, "Error\nCould not initialize MiniLibX\n");
+        ft_putstr_fd("Error\nCould not initialize MiniLibX\n", 2);
         return (1);
     }
     render(&scene, &mlx);
