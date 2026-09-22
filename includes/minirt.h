@@ -74,7 +74,8 @@ typedef struct s_scene
     t_ambient   ambient;
     t_camera    camera;
     t_light     light;
-    t_sphere    sphere;
+    //t_sphere    sphere;
+    t_object	*objects; //list of all shapes in the scene
     int         has_ambient;
     int         has_camera;
     int         has_light;
@@ -89,6 +90,46 @@ typedef	struct	s_ray
 	t_vec3	dir; //always normalised
 }	t_ray;
 
+typedef	struct	s_plane
+{
+	t_vec3	point; //any point that lies on the plane
+	t_vec3	normal;
+}	t_plane;
+typedef	struct s_cylinder
+{
+	t_vec3	center;
+	t_vec3	axis;
+	double	radius;
+	double	height;
+}	t_cylinder;
+
+typedef	enum	e_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
+typedef	struct s_object
+{
+	t_type	type;//sphere, plane, or cylinder
+	union
+    {
+		t_sphere	sp;
+		t_plane	pl;
+		t_cylinder	cy;
+	};
+	t_color	color;
+	struct	s_object	*next;
+}	t_object;
+
+typedef	struct	s_hit
+{
+	double	t;//distance along the ray to the hit
+	t_vec3	point;//exact 3D coordinate of the hit
+	t_vec3	normal;//surface direction at the hit point
+	t_object	*object;//which object was hit(NULL = miss)
+}	t_hit;
 //parse_values.c
 int     parse_double(const char *str, double *out);
 int     parse_int(const char *str, int *out);
@@ -141,4 +182,8 @@ t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal
 t_vec3	calc_ambient(t_scene *scene, t_color obj_colour);
 t_vec3	calc_diffuse(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal);
 
+//objects.c
+t_object    *create_object(t_type type, t_color color);
+void        add_object(t_scene *scene, t_object *obj);
+void        free_objects(t_object *objects);
 #endif
