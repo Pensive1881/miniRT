@@ -141,6 +141,8 @@ int     parse_ambient(char *line, t_scene *scene);
 int     parse_camera(char *line, t_scene *scene);
 int     parse_light(char *line, t_scene *scene);
 int     parse_sphere(char *line, t_scene *scene);
+int     parse_plane(char *line, t_scene *scene);
+int     parse_cylinder(char *line, t_scene *scene);
 
 // parse_scene.c
 int     parse_scene(const char *filename, t_scene *scene);
