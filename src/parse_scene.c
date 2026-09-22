@@ -43,14 +43,18 @@ static int  read_scene_line(int fd, char *line, size_t size)
 // sends an element to its matching parser
 static int  parse_element(char *line, t_scene *scene)
 {
-    if (ft_strncmp(line, "A ", 2) == 0)
+    if (line[0] == 'A' && (line[1] == ' ' || line[1] == '\t'))
         return (parse_ambient(line, scene));
-    if (ft_strncmp(line, "C ", 2) == 0)
+    if (line[0] == 'C' && (line[1] == ' ' || line[1] == '\t'))
         return (parse_camera(line, scene));
-    if (ft_strncmp(line, "L ", 2) == 0)
+    if (line[0] == 'L' && (line[1] == ' ' || line[1] == '\t'))
         return (parse_light(line, scene));
-    if (ft_strncmp(line, "sp ", 3) == 0)
+    if (ft_strncmp(line, "sp", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
         return (parse_sphere(line, scene));
+    if (ft_strncmp(line, "pl", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+        return (parse_plane(line, scene));
+    if (ft_strncmp(line, "cy", 2) == 0 && (line[2] == ' ' || line[2] == '\t'))
+        return (parse_cylinder(line, scene));
     return (0);
 }
 
@@ -93,5 +97,5 @@ int parse_scene(const char *filename, t_scene *scene)
         status = read_scene_line(fd, line, sizeof(line));
     }
     close(fd);
-    return (valid && status == 0);
-}
+    return (valid && status == 0 && scene->has_ambient && scene->has_camera && scene->has_light);
+}s
