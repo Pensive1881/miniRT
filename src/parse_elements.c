@@ -130,9 +130,8 @@ int parse_sphere(char *line, t_scene *scene)
     char        *cursor;
     char        *token;
     t_sphere    value;
+    t_object    *object;
 
-    if (scene->has_sphere)
-        return (0);
     cursor = line;
     token = next_token(&cursor);
     token = next_token(&cursor);
@@ -146,7 +145,87 @@ int parse_sphere(char *line, t_scene *scene)
         return (0);
     if (next_token(&cursor) || value.diameter <= 0.0)
         return (0);
+    object = create_object(SPHERE, value.color);
+    if (!object)
+        retuern (0);
+    object->sp = value;
+    add_object(scene, object);
     scene->sphere = value;
     scene->has_sphere = 1;
+    return (1);
+}
+
+// parses the plane values
+int parse_plane(char *line, t_scene *scene)
+{
+    char        *cursor;
+    char        *token;
+    t_vec       point;
+    t_vec3      normal;
+    t_color     color;
+    t_object    *object;
+
+    cursor = line;
+    token = next_token(&cursor);
+    token = next_token(&cursor);
+    if (!token || !parse_vec3(token, &point))
+        return (0)
+    token = next_token(&cursor);
+    if (!token || !parse_vec3(token, &normal))
+        return (0);
+    token = next_token(&Cursor);
+    if (!token || !parse_color(token, &color))
+        return (0);
+    if (next_token(&cursor) || !valid_orientation(normal))
+        return (0);
+    object = create_object(PLANE, color);
+    if (!object)
+        return (0);
+    object->pl.point = point;
+    object->pl.normal = normal;
+    add_object(scene, object);
+    return (1);
+}
+
+// parses the cylinder values
+int parse_cylinder(char *line, t_scene *scene)
+{
+    char        *cursor;
+    char        *token;
+    t_vec3      center;
+    t_vec3      axis;
+    t_color     color;
+    double      diameter;
+    double      height;
+    t_object    *object;
+
+    cursor = line;
+    token = next_token(&cursor);
+    token = next_token(&cursor);
+    if (!token || !parse_vec3(token, &center))
+        return (0);
+    token = next_token(&cursor);
+    if (!token || !parse_vec3(token, &axis))
+        return (0);
+    token = next_token(&cursor);
+    if (!token || !parse_double(token, &diameter))
+        return (0);
+    token = next_token(&cursor);
+    if (!token || !parse_double(token, &height))
+        return (0);
+    token = next_token(&cursor);
+    if (!token || !parse_color(token, &color))
+        return (0);
+    if (next_token(&curos) || !valid_orientation(axis
+            || diameter < 0.0 || height <= 0.0))
+        return (0);
+    object = create_object(CYLINDER, color);
+    if (!object)
+        return (0);
+    object->cy.center = center;
+    object->cy.axis = axis;
+    object->cy.radius = diameter / 2.0;
+    object->cy.height = height;
+    add_object(scene, object);
     return (1);
 }
