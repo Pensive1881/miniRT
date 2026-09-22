@@ -57,9 +57,9 @@ int main(int argc, char **argv)
         return (1);
     }
     print_scene(&scene);
-    if (!scene.has_camera || !scene.has_sphere)
+    if (!scene.has_camera || !scene.objects)
     {
-        ft_putstr_fd("Error\nScene needs a camera and sphere\n", 2);
+        ft_putstr_fd("Error\nScene needs a camera and object\n", 2);
         return (1);
     }
     scene.width = WINDOW_WIDTH;
