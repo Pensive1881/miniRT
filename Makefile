@@ -31,6 +31,7 @@ SRCS		= src/main.c \
 			  src/ray.c \
 			  src/sphere.c \
 			  src/vec3.c \
+			  src/plane.c \
 			  src/vec3_utils.c
 
 OBJS		= $(SRCS:.c=.o)
