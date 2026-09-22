@@ -147,7 +147,7 @@ int parse_sphere(char *line, t_scene *scene)
         return (0);
     object = create_object(SPHERE, value.color);
     if (!object)
-        retuern (0);
+        return (0);
     object->sp = value;
     add_object(scene, object);
     scene->sphere = value;
@@ -160,7 +160,7 @@ int parse_plane(char *line, t_scene *scene)
 {
     char        *cursor;
     char        *token;
-    t_vec       point;
+    t_vec3      point;
     t_vec3      normal;
     t_color     color;
     t_object    *object;
@@ -169,11 +169,11 @@ int parse_plane(char *line, t_scene *scene)
     token = next_token(&cursor);
     token = next_token(&cursor);
     if (!token || !parse_vec3(token, &point))
-        return (0)
+        return (0);
     token = next_token(&cursor);
     if (!token || !parse_vec3(token, &normal))
         return (0);
-    token = next_token(&Cursor);
+    token = next_token(&cursor);
     if (!token || !parse_color(token, &color))
         return (0);
     if (next_token(&cursor) || !valid_orientation(normal))
@@ -216,7 +216,7 @@ int parse_cylinder(char *line, t_scene *scene)
     token = next_token(&cursor);
     if (!token || !parse_color(token, &color))
         return (0);
-    if (next_token(&curos) || !valid_orientation(axis
+    if (next_token(&cursor) || !valid_orientation(axis
             || diameter < 0.0 || height <= 0.0))
         return (0);
     object = create_object(CYLINDER, color);
