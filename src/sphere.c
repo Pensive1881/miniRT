@@ -1,7 +1,7 @@
 #include "minirt.h"
 
-//calculating whether a ray hits a sphere and returns
-//the distance 't' to the closest hit
+/*calculating whether a ray hits a sphere and returns
+the distance 't' to the closest hit*/
 
 double	intersect_sphere(t_ray ray, t_sphere *sp)
 {
