@@ -216,8 +216,8 @@ int parse_cylinder(char *line, t_scene *scene)
     token = next_token(&cursor);
     if (!token || !parse_color(token, &color))
         return (0);
-    if (next_token(&cursor) || !valid_orientation(axis
-            || diameter <= 0.0 || height <= 0.0))
+    if (next_token(&cursor) || !valid_orientation(axis)
+            || diameter <= 0.0 || height <= 0.0)
         return (0);
     object = create_object(CYLINDER, color);
     if (!object)
