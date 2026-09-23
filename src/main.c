@@ -54,12 +54,14 @@ int main(int argc, char **argv)
     if (!parse_scene(argv[1], &scene))
     {
         ft_putstr_fd("Error\nInvalid scene file\n", 2);
+        free_objects(scene.objects);
         return (1);
     }
     print_scene(&scene);
     if (!scene.has_camera || !scene.objects)
     {
         ft_putstr_fd("Error\nScene needs a camera and object\n", 2);
+        free_objects(scene.objects);
         return (1);
     }
     scene.width = WINDOW_WIDTH;
@@ -68,6 +70,7 @@ int main(int argc, char **argv)
     if (!mlx_app_init(&mlx, scene.width, scene.height))
     {
         ft_putstr_fd("Error\nCould not initialize MiniLibX\n", 2);
+        free_objects(scene.objects);
         return (1);
     }
     render(&scene, &mlx);
