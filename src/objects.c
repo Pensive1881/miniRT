@@ -35,7 +35,7 @@ void	free_objects(t_object *objects)
 {
 	t_object	*next;
 
-	while (objects->next)
+	while (objects)
 	{
 		next = objects->next;
 		free(objects);
