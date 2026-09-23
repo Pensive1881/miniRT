@@ -84,7 +84,7 @@ void	render(t_scene *scene, t_mlx *mlx)
 			ray = get_ray(&scene->camera, x, y, scene->width, scene->height);
 			if (find_closest_hit(scene, ray, &hit_point))
 			{
-				colour = shade(scene, hit_point.object->color, hit_point.normal);
+				colour = shade(scene, hit_point.object->color, hit_point.point, hit_point.normal);
 			}
 			else
 			{
