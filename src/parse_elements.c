@@ -150,8 +150,8 @@ int parse_sphere(char *line, t_scene *scene)
         return (0);
     object->sp = value;
     add_object(scene, object);
-    scene->sphere = value;
-    scene->has_sphere = 1;
+    //scene->sphere = value;
+    //scene->has_sphere = 1;
     return (1);
 }
 

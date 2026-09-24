@@ -70,10 +70,8 @@ void	render(t_scene *scene, t_mlx *mlx)
 	int	x; //left to right (0 to width -1)
 	int	y; //top to bottom (0 to heigth -1)
 	t_ray	ray;
-//	double	t; // if positive, ray hit something; negetive, ray mised everything!
 	t_vec3	colour;
 	t_hit	hit_point;//the exact 3d cord where ray touched the sphre surface
-	//t_vec3	normal;//the surface direction at the hit point
 	
 	y = 0;
 	while (y < scene->height)
@@ -96,21 +94,4 @@ void	render(t_scene *scene, t_mlx *mlx)
 		y++;
 	}
 	mlx_put_image_to_window(mlx->connection, mlx->window, mlx->image, 0, 0);
-		/*	t = intersect_sphere(ray, &scene->sphere);
-			if (t > 1e-6)
-			{
-				hit_point = ray_at(ray, t);
-				normal = sphere_normal(&scene->sphere, hit_point);
-				colour = shade(scene, scene->sphere.color, hit_point, normal);
-			}
-			else
-				colour = vec3(0, 0, 0);
-			//out_image_put_pixel();
-			mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));
-			x++;
-		}
-		y++;
-	}
-	//the mlx put image to window function()
-	mlx_put_image_to_window(mlx->connection, mlx->window, mlx->image, 0, 0);*/
 }

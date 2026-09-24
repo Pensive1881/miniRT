@@ -98,4 +98,4 @@ int parse_scene(const char *filename, t_scene *scene)
     }
     close(fd);
     return (valid && status == 0 && scene->has_ambient && scene->has_camera && scene->has_light);
-}s
+}
