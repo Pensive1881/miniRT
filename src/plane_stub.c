@@ -16,9 +16,19 @@
 
 double	intersect_plane(t_ray ray, t_plane *pl)
 {
-	(void)ray;
-	(void)pl;
-	return (-1);
+	double	denom;//dot(ray.dir, normal)--how much ray aims at plane
+	double	t; //the distance along the ray to the hit point
+	t_vec3	to_plane; // vector from ray orogin to a point on the plane
+	
+	denom = vec3_dot(ray.dir, pl->normal);
+	if (denom > -1e-8 && denom < 1e-8)
+		return (-1); // its a miss, as ray is parallel
+	to_plane = vec3_sub(pl->point, ray.origin);
+	t = vec3_dot(to_plane, pl->normal) / denom;
+	if (t < 1e-6)
+		return (-1); //miss to cuz the hit is behind the camera
+
+	return (t); // this is a valid hit-- distance along the ray
 }
 
 /*the normal of plane is constant everywhere, it never changes.
