@@ -41,6 +41,7 @@ static	int	in_shadow(t_scene *scene, t_vec3 hit_point, t_vec3 normal)
 	t_ray	shadow_ray;
 	t_vec3	to_light;
 	double	light_distance;
+	t_object	*obj;
 	double	t;
 
 	to_light = vec3_sub(scene->light.position, hit_point);
@@ -48,11 +49,21 @@ static	int	in_shadow(t_scene *scene, t_vec3 hit_point, t_vec3 normal)
 	//to avoid self-hit
 	shadow_ray.origin = vec3_add(hit_point, vec3_scale(normal, 1e-6));
 	shadow_ray.dir = vec3_norm(to_light);
-	//test against all objects
-	t = intersect_sphere(shadow_ray, &scene->sphere);
-	//hit sothing before the light; in shadow
-	if (t > 1e-6 && t < light_distance)
-		return (1);
+	//new loop
+	obj = scene->objects;
+	while (obj)
+	{
+		t = -1;
+		if (obj->type == SPHERE)
+			t = intersect_sphere(shadow_ray, &obj->sp);
+		else if (obj->type == PLANE)
+			t = intersect_plane(shadow_ray, &obj->pl);
+		//else if (obj->type == CYLINDER)
+		//	t = intersect_cylinder(shadow_ray, &obj->cy);
+		if (t > 1e-6 && t < light_distance)
+			return (1);//something blocks the light = in shadow
+		obj = obj->next;
+	}
 	return (0);
 }
 

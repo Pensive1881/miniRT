@@ -23,20 +23,28 @@ static void print_scene(const t_scene *scene)
             scene->camera.fov);
 
     if (scene->has_light)
-        printf("Light: pos=(%.2f,%.2f,%.2f) ratio=%.2f color=(%d,%d,%d)\n",
+	    printf("Light: pos=(%.2f,%.2f,%.2f) ratio=%.2f color=(%d,%d,%d)\n",
             scene->light.position.x, scene->light.position.y, scene->light.position.z,
             scene->light.ratio,
             scene->light.color.r,
             scene->light.color.g,
             scene->light.color.b);
+    t_object	*obj = scene->objects;
+    int	count = 0;
+    while (obj)
+    {
+    	count++;
+	obj = obj->next;
+    }
+    printf("Objects in scene: %d\n", count);
 
-    if (scene->has_sphere)
+/*    if (scene->has_sphere)
         printf("Sphere: center=(%.2f,%.2f,%.2f) diameter=%.2f color=(%d,%d,%d)\n",
             scene->sphere.center.x, scene->sphere.center.y, scene->sphere.center.z,
             scene->sphere.diameter,
             scene->sphere.color.r,
             scene->sphere.color.g,
-            scene->sphere.color.b);
+            scene->sphere.color.b);*/
 }
 
 int main(int argc, char **argv)
