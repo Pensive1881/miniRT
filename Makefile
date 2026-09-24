@@ -14,10 +14,19 @@ INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 LIBS		= -L$(MLX_DIR) -lmlx \
 			  -framework OpenGL -framework AppKit -lm
 else
+# Keep the project-local Linux MiniLibX path for another machine/device.
+# If that folder is not present, fall back to the system install.
 MLX_DIR		?= minilibx-linux
+ifneq ($(wildcard $(MLX_DIR)/libmlx.a),)
 MLX_LIB		= $(MLX_DIR)/libmlx.a
 INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I$(MLX_DIR)
 LIBS		= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+else
+MLX_DIR		= /usr/local
+MLX_LIB		= /usr/local/lib/libmlx.a
+INCLUDES	= -Iincludes -I$(LIBFT_DIR) -I/usr/local/include
+LIBS		= -L/usr/local/lib -lmlx -lXext -lX11 -lm
+endif
 endif
 
 SRCS		= src/main.c \
@@ -43,7 +52,7 @@ $(NAME): $(MLX_LIB) $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 $(MLX_LIB):
-	$(MAKE) -C $(MLX_DIR)
+	@true
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -53,7 +62,7 @@ $(LIBFT):
 
 clean:
 	rm -f $(OBJS)
-	$(MAKE) -C $(MLX_DIR) clean
+	if [ -f "$(MLX_DIR)/Makefile" ]; then $(MAKE) -C $(MLX_DIR) clean; fi
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
