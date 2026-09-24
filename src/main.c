@@ -45,7 +45,7 @@ static void print_scene(const t_scene *scene)
             scene->sphere.color.r,
             scene->sphere.color.g,
             scene->sphere.color.b);*/
-}
+}// just for test
 
 int main(int argc, char **argv)
 {
