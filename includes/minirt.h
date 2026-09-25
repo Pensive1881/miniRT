@@ -7,7 +7,7 @@
 # include <stdio.h>
 # include <string.h>
 # include "libft.h"
-# include "mlx.h"
+//# include "mlx.h" need to uncomment for 42 pc
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
