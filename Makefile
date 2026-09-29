@@ -41,7 +41,8 @@ SRCS		= src/main.c \
 			  src/objects.c \
 			  src/sphere.c \
 			  src/vec3.c \
-			  src/plane_stub.c \
+			  src/plane.c \
+			  src/cylinder.c \
 			  src/vec3_utils.c
 
 OBJS		= $(SRCS:.c=.o)

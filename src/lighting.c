@@ -79,7 +79,7 @@ t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal
 		diffuse = vec3(0, 0, 0);
 	//combining and scaling back to 0 - 255
 	final = vec3_add(ambient, diffuse);
-	final = vec3_scale(final, 255.0);
+	//final = vec3_scale(final, 255.0);
 	//clamp: lighting math can push over 255
 	if (final.x > 255.0)
 		final.x = 255.0;

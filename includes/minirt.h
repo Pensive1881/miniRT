@@ -7,7 +7,7 @@
 # include <stdio.h>
 # include <string.h>
 # include "libft.h"
-//# include "mlx.h" need to uncomment for 42 pc
+# include "mlx.h" //need to uncomment for 42 pc
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -46,6 +46,7 @@ typedef	struct	s_plane
 	t_vec3	point; //any point that lies on the plane
 	t_vec3	normal;
 }	t_plane;
+
 typedef	struct s_cylinder
 {
 	t_vec3	center;
@@ -192,4 +193,7 @@ void        free_objects(t_object *objects);
 //plane_stub.c
 double	intersect_plane(t_ray ray, t_plane *pl);
 t_vec3	plane_normal(t_plane *pl);
+
+//cylinder.c
+t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point);
 #endif
