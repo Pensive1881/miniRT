@@ -70,15 +70,16 @@ typedef	struct s_object
 
 typedef struct s_mlx
 {
-    void    *connection;
-    void    *window;
-    void    *image;
-    char    *pixels;
-    int     bits_per_pixel;
-    int     line_length;
-    int     endian;
-    int     width;
-    int     height;
+    void        *connection;
+    void        *window;
+    void        *image;
+    char        *pixels;
+    t_object    *objects;
+    int         bits_per_pixel;
+    int         line_length;
+    int         endian;
+    int         width;
+    int         height;
 }   t_mlx;
 
 typedef struct s_ambient
