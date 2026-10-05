@@ -2,6 +2,8 @@
 
 int     mlx_close(t_mlx *mlx)
 {
+    free_objects(mlx->objects);
+    mlx->objects = NULL;
     if (mlx->image)
         mlx_destroy_image(mlx->connection, mlx->image);
     if (mlx->window)
