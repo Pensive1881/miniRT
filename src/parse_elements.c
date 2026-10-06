@@ -223,7 +223,7 @@ int parse_cylinder(char *line, t_scene *scene)
     if (!object)
         return (0);
     object->cy.center = center;
-    object->cy.axis = axis;
+    object->cy.axis = vec3_norm(axis);
     object->cy.radius = diameter / 2.0;
     object->cy.height = height;
     add_object(scene, object);
