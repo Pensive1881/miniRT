@@ -1,8 +1,8 @@
 #include "minirt.h"
 
-static void mlx_destroy_conection(t_mlx *mlx)
+static void mlx_destroy_connection(t_mlx *mlx)
 {
-    if (!mlx_connection(t_mlx *mlx))
+    if (!mlx->connection)
         return ;
 
     mlx_destroy_display(mlx->connection);
