@@ -1,5 +1,15 @@
 #include "minirt.h"
 
+static void mlx_destroy_conection(t_mlx *mlx)
+{
+    if (!mlx_connection(t_mlx *mlx))
+        return ;
+
+    mlx_destroy_display(mlx->connection);
+    free(mlx->connection);
+    mlx->connection = NULL;
+}
+
 int     mlx_close(t_mlx *mlx)
 {
     free_objects(mlx->objects);
@@ -8,6 +18,7 @@ int     mlx_close(t_mlx *mlx)
         mlx_destroy_image(mlx->connection, mlx->image);
     if (mlx->window)
         mlx_destroy_window(mlx->connection, mlx->window);
+    mlx_destroy_connection(mlx);
     exit(EXIT_SUCCESS);
     return (0);
 }
@@ -39,12 +50,16 @@ int     mlx_app_init(t_mlx *mlx, int width, int height)
         return (0);
     mlx->window = mlx_new_window(mlx->connection, width, height, "miniRT");
     if (!mlx->window)
+    {
+        mlx_destroy_connection(mlx);
         return (0);
+    }
     mlx->image = mlx_new_image(mlx->connection, width, height);
     if (!mlx->image)
     {
         mlx_destroy_window(mlx->connection, mlx->window);
         mlx->window = NULL;
+        mlx_destroy_connection(mlx);
         return (0);
     }
     mlx->pixels = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel,
@@ -55,6 +70,7 @@ int     mlx_app_init(t_mlx *mlx, int width, int height)
         mlx_destroy_window(mlx->connection, mlx->window);
         mlx->image = NULL;
         mlx->window = NULL;
+        mlx_destroy_connection(mlx);
         return (0);
     }
     mlx_key_hook(mlx->window, handle_key, mlx);
