@@ -12,6 +12,11 @@
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
 # define ESC_KEY 65307
+# ifdef __APPLE__
+#  define ESC_KEY 53
+# else
+#  define ESC_KEY 65307
+# endif
 
 typedef struct s_vec3
 {
