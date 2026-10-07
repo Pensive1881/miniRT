@@ -5,7 +5,9 @@ static void mlx_destroy_connection(t_mlx *mlx)
     if (!mlx->connection)
         return ;
 
+#ifdef __linux__
     mlx_destroy_display(mlx->connection);
+#endif
     free(mlx->connection);
     mlx->connection = NULL;
 }
