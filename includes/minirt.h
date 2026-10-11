@@ -7,7 +7,7 @@
 # include <stdio.h>
 # include <string.h>
 # include "libft.h"
-# include "mlx.h" //need to uncomment for 42 pc
+//# include "mlx.h" //need to uncomment for 42 pc
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -201,5 +201,12 @@ double	intersect_plane(t_ray ray, t_plane *pl);
 t_vec3	plane_normal(t_plane *pl);
 
 //cylinder.c
+double	intersect_cylinder(t_ray ray, t_cylinder *cy);
 t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point);
+int	valid_side_t(t_ray ray, t_cylinder *cy, double t);
+
+//cylinder_utils.c
+int	solve_quadr(double a, double b, double c, double *t1, double *t2);
+double	solve_side(t_ray ray, t_cylinder *cy);
+void	get_cy_coeffs(t_ray ray, t_cylinder *cy, double *a, double *b, double *c);
 #endif

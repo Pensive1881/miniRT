@@ -84,6 +84,7 @@ int main(int argc, char **argv)
     mlx.objects = scene.objects;
     render(&scene, &mlx);
     mlx_loop(mlx.connection);
+    //mlx_close(mlx.connection);
 
     return (0);
 }

@@ -20,8 +20,8 @@ static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
 			t = intersect_sphere(ray, &obj->sp);
 		else if (obj->type == PLANE)
 			t = intersect_plane(ray, &obj->pl);
-		//else if (obj->type == CYLINDER)
-			//t = intersect_sylinder(ray, &obj->);
+		else if (obj->type == CYLINDER)
+			t = intersect_cylinder(ray, &obj->cy);
 		/*is this hit valid and closer than what we already
 		 found? if yes, it becomes the new closest hit*/
 		if (t > 1e-6 && t < closest)
@@ -39,8 +39,8 @@ static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
 		hit->normal = sphere_normal(&hit->object->sp, hit->point);
 	else if (hit->object->type == PLANE)
 		hit->normal = plane_normal(&hit->object->pl);
-	//else if (hit->object->type == CYLINDER)
-	//	hit->normal = cylinder_normal(&hit->object->, hit->point);
+	else if (hit->object->type == CYLINDER)
+		hit->normal = cylinder_normal(&hit->object->cy, hit->point);
 	return (1);
 }
 
