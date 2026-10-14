@@ -56,8 +56,8 @@ static	int	in_shadow(t_scene *scene, t_vec3 hit_point, t_vec3 normal)
 			t = intersect_sphere(shadow_ray, &obj->sp);
 		else if (obj->type == PLANE)
 			t = intersect_plane(shadow_ray, &obj->pl);
-		//else if (obj->type == CYLINDER)
-		//	t = intersect_cylinder(shadow_ray, &obj->cy);
+		else if (obj->type == CYLINDER)
+			t = intersect_cylinder(shadow_ray, &obj->cy);
 		if (t > 1e-6 && t < light_distance)
 			return (1);//something blocks the light = in shadow
 		obj = obj->next;

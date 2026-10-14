@@ -86,7 +86,7 @@ void	render(t_scene *scene, t_mlx *mlx)
 			}
 			else
 			{
-				colour = vec3(0, 0, 0);
+				colour = vec3(20, 20, 40);
 			}
 			mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));
 			x++;
