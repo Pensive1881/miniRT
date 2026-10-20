@@ -30,6 +30,7 @@ endif
 endif
 
 SRCS		= src/main.c \
+		  	  src/utils.c \
 			  src/parse_values.c \
 			  src/parse_elements.c \
 			  src/parse_scene.c \

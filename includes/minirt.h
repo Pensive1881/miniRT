@@ -137,6 +137,7 @@ typedef	struct	s_hit
 	t_vec3	normal;//surface direction at the hit point
 	t_object	*object;//which object was hit(NULL = miss)
 }	t_hit;
+
 //parse_values.c
 int     parse_double(const char *str, double *out);
 int     parse_int(const char *str, int *out);
@@ -209,4 +210,7 @@ int	valid_side_t(t_ray ray, t_cylinder *cy, double t);
 int	solve_quadr(double a, double b, double c, double *t1, double *t2);
 double	solve_side(t_ray ray, t_cylinder *cy);
 void	get_cy_coeffs(t_ray ray, t_cylinder *cy, double *a, double *b, double *c);
+
+//utils.c
+void	print_scene(const t_scene *scene);
 #endif
