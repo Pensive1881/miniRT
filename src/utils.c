@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/21 14:40:28 by rrajni            #+#    #+#             */
+/*   Updated: 2026/10/21 14:41:05 by rrajni           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 static void	print_ambient(const t_scene *scene)
@@ -28,7 +40,7 @@ static void	print_light(const t_scene *scene)
 	if (!scene->has_light)
 		return ;
 	printf("Light: pos=(%.2f,%.2f,%.2f) ratio=%.2f color=(%d,%d,%d)\n",
-		scene->light.position.x, scene->light.position.y,
+			scene->light.position.x, scene->light.position.y,
 		scene->light.position.z,
 		scene->light.ratio,
 		scene->light.color.r,
