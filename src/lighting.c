@@ -11,55 +11,25 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-//converts 
-static t_vec3 colour_to_vec3(t_color c)
-{
-	return (vec3(c.r, c.g, c.b));
-}
 
-//ambient :: ratio x ambient_colour x obj_colour
-
-t_vec3	calc_ambient(t_scene *scene, t_color obj_colour)
-{
-	t_vec3	ambient_col;
-	t_vec3	obj;
-
-	ambient_col = colour_to_vec3(scene->ambient.color);
-	obj = colour_to_vec3(obj_colour);
-	return (vec3_scale(vec3_mul(ambient_col, obj), scene->ambient.ratio / 255.0));
-}
-
-t_vec3	calc_diffuse(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal)
-{
-	t_vec3	light_dir;
-	double	intensity;
-	t_vec3	obj;
-	t_vec3	light_col;
-
-	light_dir = vec3_norm(vec3_sub(scene->light.position, hit_point));
-	intensity = vec3_dot(normal, light_dir);
-	if (intensity < 0.0)
-		intensity = 0.0;
-	intensity = intensity * scene->light.ratio;
-	obj = colour_to_vec3(obj_colour);
-	light_col = colour_to_vec3(scene->light.color);
-	return (vec3_scale(vec3_mul(obj, light_col), intensity / 255.0));
-}
+static t_vec3	clamp_colour(t_vec3 c);
+static int	blocks_light(t_scene *scene, t_ray shadow_ray, double light_dist);
 
 static	int	in_shadow(t_scene *scene, t_vec3 hit_point, t_vec3 normal)
 {
 	t_ray	shadow_ray;
 	t_vec3	to_light;
-	double	light_distance;
+
+	to_light = vec3_sub(scene->light.position, hit_point);
+	shadow_ray = make_shadow_ray(hit_point, normal, to_light);
+	return (block_light(scene, shadow_ray, vec3_len(to_light)));
+}
+
+static	int	block_light(t_scene *scene, t_ray shadow_ray, double light_dist)
+{
 	t_object	*obj;
 	double	t;
 
-	to_light = vec3_sub(scene->light.position, hit_point);
-	light_distance = vec3_len(to_light);
-	//to avoid self-hit
-	shadow_ray.origin = vec3_add(hit_point, vec3_scale(normal, 1e-6));
-	shadow_ray.dir = vec3_norm(to_light);
-	//new loop
 	obj = scene->objects;
 	while (obj)
 	{
@@ -81,7 +51,6 @@ t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal
 {
 	t_vec3	ambient;
 	t_vec3	diffuse;
-	t_vec3	final;
 //ambient is allway applied
 	ambient = calc_ambient(scene, obj_colour);
 	//diffuse: only if not in shadow
@@ -89,21 +58,22 @@ t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal
 		diffuse = calc_diffuse(scene, obj_colour, hit_point, normal);
 	else
 		diffuse = vec3(0, 0, 0);
-	//combining and scaling back to 0 - 255
-	final = vec3_add(ambient, diffuse);
-	//final = vec3_scale(final, 255.0);
-	//clamp: lighting math can push over 255
-	if (final.x > 255.0)
-		final.x = 255.0;
-	if (final.y > 255.0)
-		final.y = 255.0;
-	if (final.z > 255.0)
-		final.z = 255.0;
-	if (final.x < 0.0)
-		final.x = 0.0;
-	if (final.y < 0.0)
-		final.y = 0.0;
-	if (final.z < 0.0)
-		final.z = 0.0;
-	return (final);
+	return (clamp_colour(vec3_add(ambient, diffuse)));
+}
+
+static	t_vec3	clamp_colour(t_vec3 c)
+{
+	if (c.x > 255.0)
+		c.x = 255.0;
+	if (c.y > 255.0)
+		c.y = 255.0;
+	if (c.z > 255.0)
+		c.z = 255.0;
+	if (c.x < 0.0)
+		c.x = 0.0;
+	if (c.y < 0.0)
+		c.y = 0.0;
+	if (c.z < 0.0)
+		c.z = 0.0;
+	return (c);
 }
