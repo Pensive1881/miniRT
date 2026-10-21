@@ -6,20 +6,21 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:36:38 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:36:45 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/21 18:02:29 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 //we will call this to build right and up from direction, after parsing
+//line 24: if camera points straight up we need diffrent world up
+
 void	camera_init(t_camera *cam)
 {
 	t_vec3	world_up;
 
 	cam->direction = vec3_norm(cam->direction);
 	world_up = vec3(0, 1, 0);
-	//if camera points straight up we need diffrent world up
 	if (fabs(vec3_dot(cam->direction, world_up)) > 0.999)
 		world_up = vec3(0, 0, 1);
 	cam->right = vec3_norm(vec3_cross(cam->direction, world_up));

@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:45 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:37:47 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/21 17:46:17 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,45 @@
 /*walk the entire object list and finds what the ray hits first. 
  * fills in the hit struct with distance, point, normal, and which object.
  * return 1 if something was hit, 0 if the ray hit nothing (background)*/
+// t = -1; default : this object does not get hit
+/*is this hit valid and closer than what we already
+                 found? if yes, it becomes the new closest hit
+                if (t > 1e-6 && t < *closest)
+                {
+			......*/
 
-static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
+static void	scan_objects(t_scene *scene, t_ray ray, t_hit *hit, double *closest)
 {
 	t_object	*obj;
-	double	t;
-	double	closest;
+	double		t;
 
-	closest = 1e9;//start with infinity far away
-	hit->object = NULL;
-	obj = scene->objects;//start at the first object in the list
+	obj = scene->objects;
 	while (obj)
 	{
-		t = -1; //default : this object does not get hit
+		t = -1;
 		if (obj->type == SPHERE)
 			t = intersect_sphere(ray, &obj->sp);
 		else if (obj->type == PLANE)
 			t = intersect_plane(ray, &obj->pl);
 		else if (obj->type == CYLINDER)
 			t = intersect_cylinder(ray, &obj->cy);
-		/*is this hit valid and closer than what we already
-		 found? if yes, it becomes the new closest hit*/
-		if (t > 1e-6 && t < closest)
+		if (t > 1e-6 && t < *closest)
 		{
-			closest = t;
+			*closest = t;
 			hit->object = obj;
 			hit->t = t;
 		}
 		obj = obj->next;
 	}
+}
+
+static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
+{
+	double	closest;
+
+	closest = 1e9;//start with infinity far away
+	hit->object = NULL;
+	scan_objects(scene, ray, hit, &closest);
 	if (!hit->object)
 		return (0);
 	hit->point = ray_at(ray, hit->t);
@@ -77,13 +87,26 @@ static	int vec3_to_colour(t_vec3 c)//will use it one our mlx funtions are ready
 	return ((r << 16) | (g << 8) | b);
 
 }
+
+static	void	render_pixel(t_scene *scene, t_mlx *mlx, int x, int y)
+{
+	t_ray	ray;
+	t_vec3	colour;
+	t_hit	hit_point;
+
+	ray = get_ray(&scene->camera, x, y, scene->width, scene->height);
+	if (find_closest_hit(scene, ray, &hit_point))
+		colour = shade(scene, hit_point.object->color, hit_point.point, hit_point.normal);
+	else
+		colour = vec3(20, 20, 40);
+	mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));
+
+}
+
 void	render(t_scene *scene, t_mlx *mlx)
 {
 	int	x; //left to right (0 to width -1)
 	int	y; //top to bottom (0 to heigth -1)
-	t_ray	ray;
-	t_vec3	colour;
-	t_hit	hit_point;//the exact 3d cord where ray touched the sphre surface
 	
 	y = 0;
 	while (y < scene->height)
@@ -91,16 +114,7 @@ void	render(t_scene *scene, t_mlx *mlx)
 		x = 0;
 		while (x < scene->width)
 		{
-			ray = get_ray(&scene->camera, x, y, scene->width, scene->height);
-			if (find_closest_hit(scene, ray, &hit_point))
-			{
-				colour = shade(scene, hit_point.object->color, hit_point.point, hit_point.normal);
-			}
-			else
-			{
-				colour = vec3(20, 20, 40);
-			}
-			mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));
+			render_pixel(scene, mlx, x, y);
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:46:55 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:47:01 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/21 17:52:04 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,9 @@ int     mlx_close(t_mlx *mlx);
 int     handle_key(int keycode, t_mlx *mlx);
 
 //lighting.c
-t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal);
+t_vec3	shade(t_scene *scene, t_color obj_colour, t_vec3 hit, t_vec3 normal);
 t_vec3	calc_ambient(t_scene *scene, t_color obj_colour);
-t_vec3	calc_diffuse(t_scene *scene, t_color obj_colour, t_vec3 hit_point, t_vec3 normal);
+t_vec3	calc_diffuse(t_scene *scene, t_color obj_col, t_vec3 hit_poi, t_vec3 normal);
 
 //objects.c
 t_object    *create_object(t_type type, t_color color);

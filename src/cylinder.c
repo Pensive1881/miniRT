@@ -6,13 +6,19 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:17 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:37:18 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/21 18:19:08 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static	double	hit_cap(t_ray ray, t_vec3 cap_center, t_vec3 cap_normal, double radius)
+//ray parallel to cap plane(is a miss)
+//to_cap points from camera to the center of the cap
+//plane intersection: t = dot(to_cap, normal)/denom
+//cap is behind the camera
+//hit outside the dark radius
+//if (vec3_dot(diff, diff) > radius * radius)...
+static	double	hit_cap(t_ray ray, t_vec3 c_center, t_vec3 c_normal, double radius)
 {
 	double	denom;
 	double	t;
@@ -20,20 +26,15 @@ static	double	hit_cap(t_ray ray, t_vec3 cap_center, t_vec3 cap_normal, double ra
 	t_vec3	hit;
 	t_vec3	diff;
 
-	denom = vec3_dot(ray.dir, cap_normal);
-	//ray parallel to cap plane(is a miss)
+	denom = vec3_dot(ray.dir, c_normal);
 	if (denom > -1e-8 && denom < 1e-8)
 		return (-1);
-	//to_cap points from camera to the center of the cap
-	to_cap = vec3_sub(cap_center, ray.origin);
-	//plane intersection: t = dot(to_cap, normal)/denom 
-	t = vec3_dot(to_cap, cap_normal) / denom;
-	//cap is behind the camera
+	to_cap = vec3_sub(c_center, ray.origin);
+	t = vec3_dot(to_cap, c_normal) / denom;
 	if (t < 1e-6)
 		return (-1);
 	hit = ray_at(ray, t);
-	diff = vec3_sub(hit, cap_center);
-	//hit outside the dark radius
+	diff = vec3_sub(hit, c_center);
 	if (vec3_dot(diff, diff) > radius * radius)
 		return (-1);
 	return (t);
@@ -42,6 +43,8 @@ static	double	hit_cap(t_ray ray, t_vec3 cap_center, t_vec3 cap_normal, double ra
 /*checks if a quadratic solution t is a real side_hit
  * hit must be in front not behind the camera
  * hit point is between  the two caps 0 < along_axis < height*/
+//find the 3d hit point, then show it on axis
+//hit must be between bottom(0) && top of the cylinder
 int	valid_side_t(t_ray ray, t_cylinder *cy, double t)
 {
 	t_vec3	hit;
@@ -50,11 +53,9 @@ int	valid_side_t(t_ray ray, t_cylinder *cy, double t)
 
 	if (t < 1e-6)
 		return (0);
-	//find the 3d hit point, then show it on axis
 	hit = ray_at(ray, t);
 	oc = vec3_sub(hit, cy->center);
 	along_axis = vec3_dot(oc, cy->axis);
-	//hit must be between bottom(0) && top of the cylinder
 	if (along_axis < 0.0 || along_axis > cy->height)
 		return (0);
 	return (1);
@@ -66,7 +67,7 @@ static	double	smallest_positive(double a, double b, double c)
 	double	best;
 
 	best = -1.0;
-	if (a > 1e-6 && (best < 0.0 || a < best))//&& check might not needed
+	if (a > 1e-6 && (best < 0.0 || a < best))
 		best = a;
 	if (b > 1e-6 && (best < 0.0 || b < best))
 		best = b;
@@ -97,6 +98,9 @@ double	intersect_cylinder(t_ray ray, t_cylinder *cy)
 }
 //top cap, bottom cap, curved side. 
 //we figureout which surface was hit by checking along_axis
+//top cap; hit at the very top
+//bottom cap; hit at the very bottom
+//curved side; normal points from axis to hit point
 t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point)
 {
 	t_vec3	oc;
@@ -105,13 +109,10 @@ t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point)
 	
 	oc = vec3_sub(hit_point, cy->center);
 	along = vec3_dot(oc, cy->axis);
-	//top cap; hit at the very top
-	if (along >= cy->height - 1e-6)//could only be along > cy->..
+	if (along >= cy->height - 1e-6)
 		return (cy->axis);
-	//bottom cap; hit at the very bottom
-	if (along <= 1e-6)//again could be just <
+	if (along <= 1e-6)
 		return (vec3_scale(cy->axis, -1.0));
-	//curved side; normal points from axis to hit point
 	axis_point = vec3_add(cy->center, vec3_scale(cy->axis, along));
 	return (vec3_norm(vec3_sub(hit_point, axis_point)));
 }

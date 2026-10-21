@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:06 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:37:07 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/21 18:11:54 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ the distance 't' to the closest hit*/
 
 double	intersect_sphere(t_ray ray, t_sphere *sp)
 {
-	t_vec3	oc; //vector pointin fro sphere's center to ray's origin
-	double	radius; //sphere radius
-	double	a; // ray direction squared
-	double	b; // projection of ray direction onto oc
-	double	c; // distance from sphere surface to origin
-	double	disc; // discrininant(b^2 - 4ac): determines number of hits
-	double	t; // distance along the ray to the hit point
+	t_vec3	oc;
+	double	radius;
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t;
 
 	//setting up sphere dimensions and center offset
 	radius = sp->diameter / 2.0;
@@ -50,13 +50,14 @@ double	intersect_sphere(t_ray ray, t_sphere *sp)
 }
 
 //calculating the surface normal at the exact point where ray struck the sphere
+//outward_dir = vec3_sub(hit_point, sp->center);->>arrow pointing from center of sphere to the hit oint
+
 t_vec3	sphere_normal(t_sphere *sp, t_vec3 hit_point)
 {
 	t_vec3	outward_dir;
 	t_vec3	normal;
 
-	outward_dir = vec3_sub(hit_point, sp->center);//arrow pointing from center of sphere to the hit oint
-	normal = vec3_norm(outward_dir);//normalising
+	outward_dir = vec3_sub(hit_point, sp->center);
+	normal = vec3_norm(outward_dir);
 	return (normal);
 }
-
