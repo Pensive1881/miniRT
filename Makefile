@@ -49,6 +49,7 @@ SRCS		= src/main.c \
 			  src/mlx_app.c \
 			  src/render.c \
 			  src/lighting.c \
+			  src/lighting_utils.c \
 			  src/camera.c \
 			  src/ray.c \
 			  src/objects.c \
