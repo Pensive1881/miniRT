@@ -92,11 +92,13 @@ static	void	render_pixel(t_scene *scene, t_mlx *mlx, int x, int y)
 {
 	t_ray	ray;
 	t_vec3	colour;
-	t_hit	hit_point;
+	t_hit	hit;
+	t_px	px;
 
-	ray = get_ray(&scene->camera, x, y, scene->width, scene->height);
-	if (find_closest_hit(scene, ray, &hit_point))
-		colour = shade(scene, hit_point.object->color, hit_point.point, hit_point.normal);
+	px = (t_px){x, y, scene->width, scene->height};
+	ray = get_ray(&scene->camera, px);
+	if (find_closest_hit(scene, ray, &hit))
+		colour = shade(scene, hit.object->color, hit.point, hit.normal);
 	else
 		colour = vec3(20, 20, 40);
 	mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));

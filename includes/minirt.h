@@ -150,6 +150,21 @@ typedef	struct	s_hit
 	t_object	*object;//which object was hit(NULL = miss)
 }	t_hit;
 
+typedef	struct	s_quadr
+{
+	double	a;
+	double	b;
+	double	c;
+}	t_quadr;
+
+typedef	struct	s_px
+{
+	int	x;
+	int	y;
+	int	width;
+	int	height;
+}	t_px;
+
 //parse_values.c
 int     parse_double(const char *str, double *out);
 int     parse_int(const char *str, int *out);
@@ -188,7 +203,7 @@ t_vec3  ray_at(t_ray r, double t);
 
 //camera.c
 void    camera_init(t_camera *cam);
-t_ray   get_ray(t_camera *cam, int px, int py, int width, int height);
+t_ray   get_ray(t_camera *cam, t_px px);
 
 //render.c
 void    render(t_scene *scene, t_mlx *mlx);
