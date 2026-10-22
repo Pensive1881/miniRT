@@ -236,7 +236,7 @@ int	valid_side_t(t_ray ray, t_cylinder *cy, double t);
 //cylinder_utils.c
 int	solve_quadr(t_quadr q, double *t1, double *t2);
 double	solve_side(t_ray ray, t_cylinder *cy);
-void	get_cy_coeffs(t_ray ray, t_cylinder *cy, double *a, double *b, double *c);
+t_quadr	get_cy_coeffs(t_ray ray, t_cylinder *cy);
 
 //utils.c
 void	print_scene(const t_scene *scene);
