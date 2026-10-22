@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 15:48:58 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 18:22:29 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:57:07 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ t_vec3	calc_ambient(t_scene *scene, t_color obj_colour)
 	return (vec3_scale(v, scene->ambient.ratio / 255.0));
 }
 
-t_vec3	calc_diffuse(t_scene *scene, t_color obj_col, t_vec3 hit_poi, t_vec3 normal)
+t_vec3	calc_diffuse(t_scene *scene, t_color obj_col, t_vec3 hit, t_vec3 norm)
 {
 	t_vec3	light_dir;
 	double	intensity;
 	t_vec3	obj;
 	t_vec3	light_col;
 
-	light_dir = vec3_norm(vec3_sub(scene->light.position, hit_poi));
-	intensity = vec3_dot(normal, light_dir);
+	light_dir = vec3_norm(vec3_sub(scene->light.position, hit));
+	intensity = vec3_dot(norm, light_dir);
 	if (intensity < 0.0)
 		intensity = 0.0;
 	intensity = intensity * scene->light.ratio;

@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:28 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/22 16:47:12 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:54:48 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ double	solve_side(t_ray ray, t_cylinder *cy)
 	double	t1;
 	double	t2;
 
-	get_cy_coeffs(ray, cy);
+	q = get_cy_coeffs(ray, cy);
 	if (q.a < 1e-10 && q.a > -1e-10)
 		return (-1);
 	if (!solve_quadr(q, &t1, &t2))
 		return (-1);
 	if (valid_side_t(ray, cy, t1))
 		return (t1);
-	if (valid_side_t(ray,cy, t2))
+	if (valid_side_t(ray, cy, t2))
 		return (t2);
 	return (-1);
 }

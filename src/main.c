@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:39:19 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:39:20 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:59:06 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	main(int ac, char **av)
 		return (cleanup(&scene, "Error\nInvalid scene file\n"));
 	print_scene(&scene);
 	if (!scene.has_camera || !scene.objects)
-		return(cleanup(&scene, "Error\nScene needs a camera and object\n"));
+		return (cleanup(&scene, "Error\nScene needs a camera and object\n"));
 	if (!setup_window(&scene, &mlx))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:40:28 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:41:05 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:56:36 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	print_light(const t_scene *scene)
 	if (!scene->has_light)
 		return ;
 	printf("Light: pos=(%.2f,%.2f,%.2f) ratio=%.2f color=(%d,%d,%d)\n",
-			scene->light.position.x, scene->light.position.y,
+		scene->light.position.x, scene->light.position.y,
 		scene->light.position.z,
 		scene->light.ratio,
 		scene->light.color.r,
@@ -51,7 +51,7 @@ static void	print_light(const t_scene *scene)
 void	print_scene(const t_scene *scene)
 {
 	t_object	*obj;
-	int	count;
+	int		count;
 
 	printf("Parsed scene:\n");
 	print_ambient(scene);

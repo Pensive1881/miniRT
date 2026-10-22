@@ -6,14 +6,14 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:36:59 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 18:21:25 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:58:03 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static	t_vec3	clamp_colour(t_vec3 c);
-static	int	block_light(t_scene *scene, t_ray shad_ray, double light_dist);
+static		t_vec3	clamp_colour(t_vec3 c);
+static		int	block_light(t_scene *scene, t_ray shad_ray, double light_dist);
 
 static	t_ray	make_shadow_ray(t_vec3 hit_poi, t_vec3 normal, t_vec3 to_light)
 {
