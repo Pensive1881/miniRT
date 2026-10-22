@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:38:07 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:38:08 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 15:13:25 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,22 @@ t_vec3	vec3_cross(t_vec3 a, t_vec3 b)
 //this is used to find the distance. this tells exactly how far the camera is
 //from an object it just hit,
 //or how far a shadow casting object is from the light source.
-
-double	vec3_len_sq(t_vec3 v)// to speed up the renderer
+// to speed up the renderer
+double	vec3_len_sq(t_vec3 v)
 {
 	return (vec3_dot(v, v));
 }
+
 double	vec3_len(t_vec3 v)
 {
 	return (sqrt(vec3_len_sq(v)));
 }
 
-//normalization
-//when we want to know which way a ray is pointing, we normalize it so the math remains
-//consistent. the '1e-8' check prevent the program from crashing if it tries to 
-//divide a vector with 0 len
+/*normalization
+when we want to know which way a ray is pointing, 
+we normalize it so the math remains consistent. 
+the '1e-8' check prevent the program from crashing if it tries to 
+divide a vector with 0 len*/
 
 t_vec3	vec3_norm(t_vec3 v)
 {

@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:45 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 17:46:17 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 15:02:30 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ static void	scan_objects(t_scene *scene, t_ray ray, t_hit *hit, double *closest)
 	}
 }
 
-static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
+static	int	find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
 {
 	double	closest;
 
-	closest = 1e9;//start with infinity far away
+	closest = 1e9;
 	hit->object = NULL;
 	scan_objects(scene, ray, hit, &closest);
 	if (!hit->object)
@@ -66,12 +66,15 @@ static	int find_closest_hit(t_scene *scene, t_ray ray, t_hit *hit)
 	return (1);
 }
 
-static	int vec3_to_colour(t_vec3 c)//will use it one our mlx funtions are ready
-				    //to be passed thr
+static	int	vec3_to_colour(t_vec3 c)
 {
-	int	r = (int)(c.x);
-	int	g = (int)(c.y);
-	int	b = (int)(c.z);
+	int	r;
+	int	g;
+	int	b;
+
+	r = (int)(c.x);
+	g = (int)(c.y);
+	b = (int)(c.z);
 	if (r > 255)
 		r = 255;
 	if (g > 255)
@@ -85,7 +88,6 @@ static	int vec3_to_colour(t_vec3 c)//will use it one our mlx funtions are ready
 	if (b < 0)
 		b = 0;
 	return ((r << 16) | (g << 8) | b);
-
 }
 
 static	void	render_pixel(t_scene *scene, t_mlx *mlx, int x, int y)
@@ -102,14 +104,13 @@ static	void	render_pixel(t_scene *scene, t_mlx *mlx, int x, int y)
 	else
 		colour = vec3(20, 20, 40);
 	mlx_put_pixel(mlx, x, y, vec3_to_colour(colour));
-
 }
 
 void	render(t_scene *scene, t_mlx *mlx)
 {
-	int	x; //left to right (0 to width -1)
-	int	y; //top to bottom (0 to heigth -1)
-	
+	int	x;
+	int	y;
+
 	y = 0;
 	while (y < scene->height)
 	{

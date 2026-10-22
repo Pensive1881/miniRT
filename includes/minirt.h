@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:46:55 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 17:52:04 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 15:32:37 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point);
 int	valid_side_t(t_ray ray, t_cylinder *cy, double t);
 
 //cylinder_utils.c
-int	solve_quadr(double a, double b, double c, double *t1, double *t2);
+int	solve_quadr(t_quadr q, double *t1, double *t2);
 double	solve_side(t_ray ray, t_cylinder *cy);
 void	get_cy_coeffs(t_ray ray, t_cylinder *cy, double *a, double *b, double *c);
 

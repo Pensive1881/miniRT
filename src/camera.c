@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:36:38 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 18:02:29 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 14:57:10 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static	t_vec3	pixel_to_dir(t_camera *cam, t_px px)
 	half_w = tan(cam->fov * M_PI / 360.0);
 	u = half_w * (2.0 * (px.x + 0.5) / px.width - 1.0);
 	v = half_w / ((double)px.width / px.height)
-			* (1.0 - 2.0 * (px.y + 0.5) / px.height);
+		* (1.0 - 2.0 * (px.y + 0.5) / px.height);
 	aa = vec3_scale(cam->right, u);
 	dir = vec3_add(cam->direction,
 			vec3_add(aa, vec3_scale(cam->up, v)));
@@ -53,5 +53,4 @@ t_ray	get_ray(t_camera *cam, t_px px)
 	ray.origin = cam->position;
 	ray.dir = pixel_to_dir(cam, px);
 	return (ray);
-
 }

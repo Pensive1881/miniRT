@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:17 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 18:19:08 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 15:04:30 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 //cap is behind the camera
 //hit outside the dark radius
 //if (vec3_dot(diff, diff) > radius * radius)...
-static	double	hit_cap(t_ray ray, t_vec3 c_center, t_vec3 c_normal, double radius)
+static	double	hit_cap(t_ray ray, t_vec3 c_center, t_vec3 c_normal, double r)
 {
 	double	denom;
 	double	t;
@@ -35,7 +35,7 @@ static	double	hit_cap(t_ray ray, t_vec3 c_center, t_vec3 c_normal, double radius
 		return (-1);
 	hit = ray_at(ray, t);
 	diff = vec3_sub(hit, c_center);
-	if (vec3_dot(diff, diff) > radius * radius)
+	if (vec3_dot(diff, diff) > r * r)
 		return (-1);
 	return (t);
 }
@@ -96,6 +96,7 @@ double	intersect_cylinder(t_ray ray, t_cylinder *cy)
 	t_top = hit_cap(ray, top_center, cy->axis, radius);
 	return (smallest_positive(t_side, t_bottom, t_top));
 }
+
 //top cap, bottom cap, curved side. 
 //we figureout which surface was hit by checking along_axis
 //top cap; hit at the very top
@@ -106,7 +107,7 @@ t_vec3	cylinder_normal(t_cylinder *cy, t_vec3 hit_point)
 	t_vec3	oc;
 	double	along;
 	t_vec3	axis_point;
-	
+
 	oc = vec3_sub(hit_point, cy->center);
 	along = vec3_dot(oc, cy->axis);
 	if (along >= cy->height - 1e-6)
