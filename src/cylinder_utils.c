@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:37:28 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/22 15:39:30 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/22 16:47:12 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static	void	cy_perp(t_ray r, t_cylinder *cy, t_vec3 *dp, t_vec3 *op)
 {
 	t_vec3	oc;
 
-	oc vec3_sub(ray.origin, cy->center);
-	*dp = vec3_sub(ray.dir, vec3_scale(cy->axis,
-				vec3_dot(ray.dir, cy->axis)));
+	oc = vec3_sub(r.origin, cy->center);
+	*dp = vec3_sub(r.dir, vec3_scale(cy->axis,
+				vec3_dot(r.dir, cy->axis)));
 	*op = vec3_sub(oc, vec3_scale(cy->axis,
 				vec3_dot(oc, cy->axis)));
 }
@@ -67,7 +67,8 @@ t_quadr	get_cy_coeffs(t_ray ray, t_cylinder *cy)
 	t_vec3	oc_perpend;
 
 	cy_perp(ray, cy, &di_perpend, &oc_perpend);
-	*q.a = vec3_dot(di_perpend, di_perpend);
-	*q.b = 2.0 * vec3_dot(di_perpend, oc_perpend);
-	*q.c = vec3_dot(oc_perpend, oc_perpend) - (cy->radius * cy->radius);
+	q.a = vec3_dot(di_perpend, di_perpend);
+	q.b = 2.0 * vec3_dot(di_perpend, oc_perpend);
+	q.c = vec3_dot(oc_perpend, oc_perpend) - (cy->radius * cy->radius);
+	return (q);
 }
