@@ -18,8 +18,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
-#include <float.h>
-#include <limits.h>
+# include <float.h>
+# include <limits.h>
 # include "libft.h"
 # include "mlx.h" //need to uncomment for 42 pc
 
