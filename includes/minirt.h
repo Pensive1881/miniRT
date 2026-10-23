@@ -18,10 +18,10 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
-# include <float.h>
+# include "float.h"
 # include <limits.h>
 # include "libft.h"
-# include "mlx.h" //need to uncomment for 42 pc
+# include "mlx.h"
 
 # define WINDOW_WIDTH 800
 # define WINDOW_HEIGHT 600
@@ -74,18 +74,21 @@ typedef struct s_cylinder
 	double	height;
 }	t_cylinder;
 
-typedef struct s_object
+typedef struct s_object	t_object;
+typedef struct s_object	t_obj;
+
+struct s_object
 {
-	t_type	type;
+	t_type				type;
 	union
 	{
 		t_sphere	sp;
 		t_plane		pl;
 		t_cylinder	cy;
 	};
-	t_color	color;
-	struct s_object	*next;
-}	t_object;
+	t_color				color;
+	t_object			*next;
+};
 
 typedef struct s_mlx
 {
@@ -233,7 +236,7 @@ t_vec3	calc_ambient(t_scene *scene, t_color obj_colour);
 t_vec3	calc_diffuse(t_scene *scene, t_color obj_col, t_vec3 hit, t_vec3 norm);
 
 //objects.c
-t_object	*create_object(t_type type, t_color color);
+t_obj	*create_object(t_type type, t_color color);
 void	add_object(t_scene *scene, t_object *obj);
 void	free_objects(t_object *objects);
 
