@@ -6,88 +6,88 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:39:38 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/21 14:39:40 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/23 19:35:14 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void mlx_destroy_connection(t_mlx *mlx)
+static	void	mlx_destroy_connection(t_mlx *mlx)
 {
-    if (!mlx->connection)
-        return ;
-
+	if (!mlx->connection)
+		return ;
 #ifdef __linux__
-    mlx_destroy_display(mlx->connection);
+	mlx_destroy_display(mlx->connection);
 #endif
-    free(mlx->connection);
-    mlx->connection = NULL;
+	free(mlx->connection);
+	mlx->connection = NULL;
 }
 
-int     mlx_close(t_mlx *mlx)
+int	mlx_close(t_mlx *mlx)
 {
-    free_objects(mlx->objects);
-    mlx->objects = NULL;
-    if (mlx->image)
-        mlx_destroy_image(mlx->connection, mlx->image);
-    if (mlx->window)
-        mlx_destroy_window(mlx->connection, mlx->window);
-    mlx_destroy_connection(mlx);
-    exit(EXIT_SUCCESS);
-    return (0);
+	free_objects(mlx->objects);
+	mlx->objects = NULL;
+	if (mlx->image)
+		mlx_destroy_image(mlx->connection, mlx->image);
+	if (mlx->window)
+		mlx_destroy_window(mlx->connection, mlx->window);
+	mlx_destroy_connection(mlx);
+	exit(EXIT_SUCCESS);
+	return (0);
 }
 
-int     handle_key(int keycode, t_mlx *mlx)
+int	handle_key(int keycode, t_mlx *mlx)
 {
-    if (keycode == ESC_KEY)
-        mlx_close(mlx);
-    return (0);
+	if (keycode == ESC_KEY)
+		mlx_close(mlx);
+	return (0);
 }
 
-void    mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
+void	mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
 {
-    char    *destination;
+	char	*destination;
 
-    if (x < 0 || x >= mlx->width || y < 0 || y >= mlx->height)
-        return ;
-    destination = mlx->pixels + (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
-    *(unsigned int *)destination = (unsigned int)color;
+	if (x < 0 || x >= mlx->width || y < 0 || y >= mlx->height)
+		return ;
+	destination = mlx->pixels 
+		+ (y * mlx->line_length + x * (mlx->bits_per_pixel / 8));
+	*(unsigned int *)destination = (unsigned int)color;
 }
 
-int     mlx_app_init(t_mlx *mlx, int width, int height)
+int	mlx_app_init(t_mlx *mlx, int width, int height)
 {
-    memset(mlx, 0, sizeof(*mlx));
-    mlx->width = width;
-    mlx->height = height;
-    mlx->connection = mlx_init();
-    if (!mlx->connection)
-        return (0);
-    mlx->window = mlx_new_window(mlx->connection, width, height, "miniRT");
-    if (!mlx->window)
-    {
-        mlx_destroy_connection(mlx);
-        return (0);
-    }
-    mlx->image = mlx_new_image(mlx->connection, width, height);
-    if (!mlx->image)
-    {
-        mlx_destroy_window(mlx->connection, mlx->window);
-        mlx->window = NULL;
-        mlx_destroy_connection(mlx);
-        return (0);
-    }
-    mlx->pixels = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel,
-                                    &mlx->line_length, &mlx->endian);
-    if (!mlx->pixels)
-    {
-        mlx_destroy_image(mlx->connection, mlx->image);
-        mlx_destroy_window(mlx->connection, mlx->window);
-        mlx->image = NULL;
-        mlx->window = NULL;
-        mlx_destroy_connection(mlx);
-        return (0);
-    }
-    mlx_key_hook(mlx->window, handle_key, mlx);
-    mlx_hook(mlx->window, 17, 0, mlx_close, mlx);
-    return (1);
+	memset(mlx, 0, sizeof(*mlx));
+	mlx->width = width;
+	mlx->height = height;
+	mlx->connection = mlx_init();
+	if (!mlx->connection)
+		return (0);
+	mlx->window = mlx_new_window(mlx->connection, width, height, "miniRT");
+	if (!mlx->window)
+	{
+		mlx_destroy_connection(mlx);
+		return (0);
+	}
+	mlx->image = mlx_new_image(mlx->connection, width, height);
+	if (!mlx->image)
+	{
+		mlx_destroy_window(mlx->connection, mlx->window);
+		mlx->window = NULL;
+		mlx_destroy_connection(mlx);
+		return (0);
+	}
+	mlx->pixels = mlx_get_data_addr(mlx->image, &mlx->bits_per_pixel, 
+			&mlx->line_length, &mlx->endian);
+	if (!mlx->pixels)
+	{
+		mlx_destroy_image(mlx->connection, mlx->image);
+		mlx_destroy_window(mlx->connection, mlx->window);
+		mlx->image = NULL;
+		mlx->window = NULL;
+		mlx_destroy_connection(mlx);
+		return (0);
+	}
+	mlx_key_hook(mlx->window, handle_key, mlx);
+	mlx_hook(mlx->window, 17, 0, mlx_close, mlx);
+	return (1);
 }

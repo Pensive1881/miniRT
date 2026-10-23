@@ -6,7 +6,7 @@
 /*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:46:55 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/22 15:32:37 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/10/23 17:36:35 by rrajni           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <string.h>
+#include <float.h>
+#include <limits.h>
 # include "libft.h"
 # include "mlx.h" //need to uncomment for 42 pc
 
@@ -165,6 +167,15 @@ typedef struct s_px
 	int	height;
 }		t_px;
 
+typedef struct s_cy_args
+{
+	t_vec3	center;
+	t_vec3	axis;
+	t_color	color;
+	double	diameter;
+	double	height;
+}		t_cy_args;
+
 //parse_values.c
 int		parse_double(const char *str, double *out);
 int		parse_int(const char *str, int *out);
@@ -178,6 +189,8 @@ int		parse_light(char *line, t_scene *scene);
 int		parse_sphere(char *line, t_scene *scene);
 int		parse_plane(char *line, t_scene *scene);
 int		parse_cylinder(char *line, t_scene *scene);
+int		valid_orientation(t_vec3 vector);
+char	*next_token(char **cursor);
 
 // parse_scene.c
 int		parse_scene(const char *filename, t_scene *scene);

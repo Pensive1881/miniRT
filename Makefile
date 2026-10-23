@@ -58,6 +58,8 @@ SRCS		= src/main.c \
 			  src/plane.c \
 			  src/cylinder.c \
 			  src/cylinder_utils.c \
+			  src/parse_shapes.c \
+			  src/parse_val_utils.c \
 			  src/vec3_utils.c
 
 OBJS		= $(SRCS:.c=.o)
