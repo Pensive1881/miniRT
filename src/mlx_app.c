@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_app.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrajni <rrajni@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: akasper <akasper@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 14:39:38 by rrajni            #+#    #+#             */
-/*   Updated: 2026/10/23 19:35:14 by rrajni           ###   ########.fr       */
+/*   Updated: 2026/11/24 13:58:14 by akasper          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	mlx_put_pixel(t_mlx *mlx, int x, int y, int color)
 
 int	mlx_app_init(t_mlx *mlx, int width, int height)
 {
-	memset(mlx, 0, sizeof(*mlx));
+	ft_bzero(mlx, sizeof(*mlx));
 	mlx->width = width;
 	mlx->height = height;
 	mlx->connection = mlx_init();
