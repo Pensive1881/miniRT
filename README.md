@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by acasper, rrajni*
+*This project has been created as part of the 42 curriculum by acasper, rrajni.*
 
 # miniRT
 
@@ -27,13 +27,11 @@ and `libX11`.
 
 Compile the program with:
 
-```sh
 make
-Other available Makefile rules are:
 make clean
 make fclean
 make re
-Execution
+
 Run the program with one .rt scene file:
 ./miniRT scenes/valid/basic.rt
 The program accepts exactly one scene file with the .rt extension.
@@ -57,8 +55,7 @@ L -40,0,30 0.7 255,255,255
 pl 0,0,0 0,1,0 255,0,225
 sp 0,0,20 20 255,0,0
 cy 50,0,20.6 0,0,1 14.2 21.42 10,0,255
-Invalid scene configurations cause the program to exit with Error followed
-by an explanatory message.
+Invalid scene configurations cause the program to exit with Error
 
 ## Resources
 
