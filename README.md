@@ -3,7 +3,9 @@
 # miniRT
 
 ## Description
+miniRT is a ray tracer written in C using MiniLibX. It renders three-dimensional scenes defined in .rt files, supporting cameras, ambient and diffuse lighting, hard shadows, spheres, planes and cylinders.
 
+This project explores the fundamentals of computer graphics, including vector mathematics, ray-object intersections, surface normals, lighting calculations, scene parsing and image rendering.
 
 ## Instructions
 
